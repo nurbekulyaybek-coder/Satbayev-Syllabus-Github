@@ -1,0 +1,9 @@
+Satbayev Syllabus Studio — initial accounts
+
+admin / SatbayevAdmin#2026
+user  / Teacher#2026
+
+Start: START_WINDOWS.bat (Python 3.10+)
+Open: http://localhost:8000
+Passwords can be changed using the account button.
+Admin can create additional teacher accounts.

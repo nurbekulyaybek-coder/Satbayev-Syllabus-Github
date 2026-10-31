@@ -1,0 +1,517 @@
+{
+  "terms": [
+    {
+      "kk": "Автоматика және ақпараттық технологиялар институты",
+      "ru": "Институт автоматики и информационных технологий",
+      "en": "Institute of Automation and Information Technologies"
+    },
+    {
+      "kk": "Қ. Тұрысов атындағы Геология және мұнай-газ ісі институты",
+      "ru": "Институт геологии и нефтегазового дела имени К. Турысова",
+      "en": "K. Turysov Institute of Geology and Oil and Gas Business"
+    },
+    {
+      "kk": "Ө.А. Байқоңыров атындағы Тау-кен металлургия институты",
+      "ru": "Горно-металлургический институт имени О. А. Байконурова",
+      "en": "O. A. Baikonurov Mining and Metallurgical Institute"
+    },
+    {
+      "kk": "Ә. Бүркітбаев атындағы Энергетика және машина жасау институты",
+      "ru": "Институт энергетики и машиностроения имени А. Буркитбаева",
+      "en": "A. Burkitbayev Institute of Energy and Mechanical Engineering"
+    },
+    {
+      "kk": "Т. Бәсенов атындағы Сәулет және құрылыс институты",
+      "ru": "Институт архитектуры и строительства имени Т. Басенова",
+      "en": "T. Basenov Institute of Architecture and Construction"
+    },
+    {
+      "kk": "Е. Түркебаев атындағы Жобаларды басқару институты",
+      "ru": "Институт управления проектами имени Э. Туркебаева",
+      "en": "E. Turkebayev Institute of Project Management"
+    },
+    {
+      "kk": "М. Тынышпаев атындағы Көлік инженериясы және логистика мектебі",
+      "ru": "Школа транспортной инженерии и логистики имени М. Тынышпаева",
+      "en": "M. Tynyshpayev School of Transport Engineering and Logistics"
+    },
+    {
+      "kk": "Цифрлық технологиялар және жасанды интеллект академиясы",
+      "ru": "Академия цифровых технологий и искусственного интеллекта",
+      "en": "Academy of Digital Technologies and Artificial Intelligence"
+    },
+    {
+      "kk": "Әскери іс институты",
+      "ru": "Институт военного дела",
+      "en": "Institute of Military Affairs"
+    },
+    {
+      "kk": "Қ. Тұрысов атындағы Геология және мұнай-газ ісі институты",
+      "ru": "Институт геологии и нефтегазового дела имени К. Турысова",
+      "en": "K. Turysov Institute of Geology and Oil and Gas Business",
+      "aliases": [
+        "Институт геологии и нефтегазового дела им. К. Турысова"
+      ]
+    },
+    {
+      "kk": "Ө.А. Байқоңыров атындағы Тау-кен металлургия институты",
+      "ru": "Горно-металлургический институт имени О. А. Байконурова",
+      "en": "O. A. Baikonurov Mining and Metallurgical Institute",
+      "aliases": [
+        "Горно-металлургический институт им. О. Б. Байконурова (ГИ, ИМиП)"
+      ]
+    },
+    {
+      "kk": "Ақпараттық және телекоммуникациялық технологиялар институты (АТИ, ИИТ)",
+      "ru": "Институт информационных и телекоммуникационных технологий (АТИ, ИИТ)",
+      "en": "Institute of Information and Telecommunication Technologies (ATI, IIT)",
+      "aliases": [
+        "Институт информационных и телекоммуникационных технологий (АТИ, ИИТ)"
+      ]
+    },
+    {
+      "kk": "Ә. Бүркітбаев атындағы Өнеркәсіптік инженерия институты (Машина жасау институты)",
+      "ru": "Институт промышленной инженерии им. А. Буркитбаева (Институт машиностроения)",
+      "en": "A. Burkitbayev Institute of Industrial Engineering (Institute of Mechanical Engineering)",
+      "aliases": [
+        "Институт промышленной инженерии им. А. Буркитбаева (Институт машиностроения)"
+      ]
+    },
+    {
+      "kk": "Е. А. Түркебаев атындағы Жобаларды басқару институты (Экономика және бизнес институты)",
+      "ru": "Институт управления проектами им. Э. А. Туркебаева (Институт экономики и бизнеса)",
+      "en": "E. A. Turkebayev Institute of Project Management (Institute of Economics and Business)",
+      "aliases": [
+        "Институт управления проектами им.  Э. А. Туркебаева (Институт экономики и бизнеса)"
+      ]
+    },
+    {
+      "kk": "Жоғары технологиялар инженериясы институты",
+      "ru": "Институт инженерии высоких технологий",
+      "en": "Institute of High-Technology Engineering",
+      "aliases": [
+        "Институт инженерии высоких технологий (бывш. Институт высоких технологий и устойчивого развития, ЕГИ)"
+      ]
+    },
+    {
+      "kk": "Т. Бәсенов атындағы Сәулет және құрылыс институты",
+      "ru": "Институт архитектуры и строительства имени Т. Басенова",
+      "en": "T. Basenov Institute of Architecture and Construction",
+      "aliases": [
+        "Институт архитектуры и строительства им. Т. Басенова (Строительства и экологии)"
+      ]
+    },
+    {
+      "kk": "Қашықтан білім беру институты",
+      "ru": "Институт дистанционного образования",
+      "en": "Institute of Distance Education",
+      "aliases": [
+        "Институт дистанционного образования"
+      ]
+    },
+    {
+      "kk": "Әскери іс институты",
+      "ru": "Институт военного дела",
+      "en": "Institute of Military Affairs",
+      "aliases": [
+        "Институт военного дела"
+      ]
+    },
+    {
+      "kk": "Ақжан Машани атындағы Базалық білім беру институты",
+      "ru": "Институт базового образования имени Акжана Машани",
+      "en": "Akzhan Mashani Institute of Basic Education",
+      "aliases": [
+        "Институт базового образования им. Акжана Машани"
+      ]
+    },
+    {
+      "kk": "МИПО Excellence PolyTech",
+      "ru": "МИПО Excellence PolyTech",
+      "en": "Excellence PolyTech International Institute of Postgraduate Education",
+      "aliases": [
+        "МИПО Excellence PolyTech"
+      ]
+    },
+    {
+      "kk": "Химиялық және биологиялық технологиялар институты",
+      "ru": "Институт химических и биологических технологий",
+      "en": "Institute of Chemical and Biological Technologies",
+      "aliases": [
+        "Институт химических и биологических технологий"
+      ]
+    },
+    {
+      "kk": "Геологиялық барлау факультеті",
+      "ru": "Геологоразведочный факультет",
+      "en": "Faculty of Geological Exploration",
+      "aliases": [
+        "Геологоразведочный факультет"
+      ]
+    },
+    {
+      "kk": "Автоматика және ақпараттық технологиялар институты",
+      "ru": "Институт автоматики и информационных технологий",
+      "en": "Institute of Automation and Information Technologies",
+      "aliases": [
+        "Институт автоматики и информационных технологий"
+      ]
+    },
+    {
+      "kk": "Энергетика және машина жасау институты",
+      "ru": "Институт энергетики и машиностроения",
+      "en": "Institute of Energy and Mechanical Engineering",
+      "aliases": [
+        "Институт энергетики и машиностроения"
+      ]
+    },
+    {
+      "kk": "Цифрлық технологиялар және кәсіби даму институты",
+      "ru": "Институт цифровых технологий и профессионального развития",
+      "en": "Institute of Digital Technologies and Professional Development",
+      "aliases": [
+        "Институт цифровых технологий и профессионального развития"
+      ]
+    },
+    {
+      "kk": "Киберқауіпсіздік",
+      "ru": "Кибербезопасность",
+      "en": "Cybersecurity"
+    },
+    {
+      "kk": "Бағдарламалық инженерия",
+      "ru": "Программная инженерия",
+      "en": "Software Engineering"
+    },
+    {
+      "kk": "Автоматтандыру және басқару",
+      "ru": "Автоматизация и управление",
+      "en": "Automation and Control"
+    },
+    {
+      "kk": "Робототехника және автоматиканың техникалық құралдары",
+      "ru": "Робототехника и технические средства автоматики",
+      "en": "Robotics and Automation Equipment"
+    },
+    {
+      "kk": "Электроника, телекоммуникациялар және ғарыштық технологиялар",
+      "ru": "Электроника, телекоммуникации и космические технологии",
+      "en": "Electronics, Telecommunications and Space Technologies"
+    },
+    {
+      "kk": "Жоғары математика және модельдеу",
+      "ru": "Высшая математика и моделирование",
+      "en": "Higher Mathematics and Modelling"
+    },
+    {
+      "kk": "Инженерлік механика",
+      "ru": "Инженерная механика",
+      "en": "Engineering Mechanics"
+    },
+    {
+      "kk": "Ақпараттық жүйелер",
+      "ru": "Информационные системы",
+      "en": "Information Systems"
+    },
+    {
+      "kk": "Геологиялық түсіру, пайдалы қазба кенорындарын іздеу және барлау",
+      "ru": "Геологическая съёмка, поиск и разведка месторождений полезных ископаемых",
+      "en": "Geological Surveying, Prospecting and Mineral Exploration"
+    },
+    {
+      "kk": "Мұнай инженериясы",
+      "ru": "Нефтяная инженерия",
+      "en": "Petroleum Engineering"
+    },
+    {
+      "kk": "Геофизика және сейсмология",
+      "ru": "Геофизика и сейсмология",
+      "en": "Geophysics and Seismology"
+    },
+    {
+      "kk": "Гидрогеология, инженерлік және мұнай-газ геологиясы",
+      "ru": "Гидрогеология, инженерная и нефтегазовая геология",
+      "en": "Hydrogeology, Engineering and Petroleum Geology"
+    },
+    {
+      "kk": "Тау-кен ісі",
+      "ru": "Горное дело",
+      "en": "Mining"
+    },
+    {
+      "kk": "Металлургия және пайдалы қазбаларды байыту",
+      "ru": "Металлургия и обогащение полезных ископаемых",
+      "en": "Metallurgy and Mineral Processing"
+    },
+    {
+      "kk": "Маркшейдерлік іс және геодезия",
+      "ru": "Маркшейдерское дело и геодезия",
+      "en": "Mine Surveying and Geodesy"
+    },
+    {
+      "kk": "Материалтану, нанотехнологиялар және инженерлік физика",
+      "ru": "Материаловедение, нанотехнологии и инженерная физика",
+      "en": "Materials Science, Nanotechnology and Engineering Physics"
+    },
+    {
+      "kk": "Химиялық процестер және өнеркәсіптік экология",
+      "ru": "Химические процессы и промышленная экология",
+      "en": "Chemical Processes and Industrial Ecology"
+    },
+    {
+      "kk": "Тау-кен робототехникасы және өндіруді автоматтандыру",
+      "ru": "Горная робототехника и автоматизация добычи",
+      "en": "Mining Robotics and Extraction Automation"
+    },
+    {
+      "kk": "Энергетика",
+      "ru": "Энергетика",
+      "en": "Power Engineering"
+    },
+    {
+      "kk": "Машина жасау",
+      "ru": "Машиностроение",
+      "en": "Mechanical Engineering"
+    },
+    {
+      "kk": "Технологиялық машиналар және газтурбиналық қондырғылар",
+      "ru": "Технологические машины и газотурбинные установки",
+      "en": "Process Machinery and Gas Turbine Plants"
+    },
+    {
+      "kk": "Машина жасаудағы робототехника және мехатроника",
+      "ru": "Робототехника и мехатроника в машиностроении",
+      "en": "Robotics and Mechatronics in Mechanical Engineering"
+    },
+    {
+      "kk": "Стандарттау, сертификаттау және метрология",
+      "ru": "Стандартизация, сертификация и метрология",
+      "en": "Standardisation, Certification and Metrology"
+    },
+    {
+      "kk": "Жалпы физика",
+      "ru": "Общая физика",
+      "en": "General Physics"
+    },
+    {
+      "kk": "Сәулет",
+      "ru": "Архитектура",
+      "en": "Architecture"
+    },
+    {
+      "kk": "Инженерлік жүйелер және желілер",
+      "ru": "Инженерные системы и сети",
+      "en": "Engineering Systems and Networks"
+    },
+    {
+      "kk": "Құрылыс және құрылыс материалдары",
+      "ru": "Строительство и строительные материалы",
+      "en": "Construction and Building Materials"
+    },
+    {
+      "kk": "Менеджмент және математикалық экономика",
+      "ru": "Менеджмент и математическая экономика",
+      "en": "Management and Mathematical Economics"
+    },
+    {
+      "kk": "Қоғамдық пәндер",
+      "ru": "Общественные дисциплины",
+      "en": "Social Sciences"
+    },
+    {
+      "kk": "Шетел тілдері",
+      "ru": "Иностранные языки",
+      "en": "Foreign Languages"
+    },
+    {
+      "kk": "Қазақ және орыс тілдері",
+      "ru": "Казахский и русский языки",
+      "en": "Kazakh and Russian Languages"
+    },
+    {
+      "kk": "Дене шынықтыру",
+      "ru": "Физическая культура",
+      "en": "Physical Education"
+    },
+    {
+      "kk": "Көлік инженериясы бағыты",
+      "ru": "Направление транспортной инженерии",
+      "en": "Transport Engineering"
+    },
+    {
+      "kk": "Логистика бағыты",
+      "ru": "Направление логистики",
+      "en": "Logistics"
+    },
+    {
+      "kk": "Әскери кафедра",
+      "ru": "Военная кафедра",
+      "en": "Military Department"
+    },
+    {
+      "kk": "Компьютерлік жүйелер архитектурасы",
+      "ru": "Архитектура компьютерных систем",
+      "en": "Computer Systems Architecture"
+    },
+    {
+      "kk": "Ақпараттық қауіпсіздік",
+      "ru": "Информационная безопасность",
+      "en": "Information Security"
+    },
+    {
+      "kk": "Ақпараттық қауіпсіздікті кешенді қамтамасыз ету",
+      "ru": "Комплексное обеспечение информационной безопасности",
+      "en": "Comprehensive Information Security Assurance"
+    },
+    {
+      "kk": "Ақпараттық қауіпсіздік жүйелері",
+      "ru": "Системы информационной безопасности",
+      "en": "Information Security Systems"
+    },
+    {
+      "kk": "Жылуэнергетика",
+      "ru": "Теплоэнергетика",
+      "en": "Thermal Power Engineering"
+    },
+    {
+      "kk": "Жерүсті электр көлігі және зарядтау инфрақұрылымы",
+      "ru": "Наземный электрический транспорт и зарядная инфраструктура",
+      "en": "Ground Electric Transport and Charging Infrastructure"
+    },
+    {
+      "kk": "Цифрлық энергетика",
+      "ru": "Цифровая энергетика",
+      "en": "Digital Power Engineering"
+    },
+    {
+      "kk": "Алматы",
+      "ru": "Алматы",
+      "en": "Almaty"
+    },
+    {
+      "kk": "Сенбі, 11:00–13:00",
+      "ru": "Суббота, 11:00–13:00",
+      "en": "Saturday, 11:00–13:00"
+    },
+    {
+      "kk": "«Қ.И. Сәтбаев атындағы Қазақ ұлттық техникалық зерттеу университеті» КЕАҚ",
+      "ru": "НАО «Казахский национальный исследовательский технический университет имени К. И. Сатпаева»",
+      "en": "Non-profit Joint Stock Company “Kazakh National Research Technical University named after K. I. Satbayev”"
+    },
+    {
+      "kk": "БП",
+      "ru": "БД",
+      "en": "Basic disciplines"
+    },
+    {
+      "kk": "БП ТК",
+      "ru": "БД КВ",
+      "en": "Basic disciplines — elective"
+    },
+    {
+      "kk": "БП ЖООК",
+      "ru": "БД ВК",
+      "en": "Basic disciplines — university component"
+    },
+    {
+      "kk": "БейП",
+      "ru": "ПД",
+      "en": "Major disciplines"
+    },
+    {
+      "kk": "БейП ТК",
+      "ru": "ПД КВ",
+      "en": "Major disciplines — elective"
+    },
+    {
+      "kk": "БейП ЖООК",
+      "ru": "ПД ВК",
+      "en": "Major disciplines — university component"
+    },
+    {
+      "kk": "ЖБП",
+      "ru": "ООД",
+      "en": "General education disciplines"
+    }
+  ],
+  "labels": {
+    "kk": {
+      "syllabus": "СИЛЛАБУС",
+      "approve": "БЕКІТЕМІН",
+      "director": "Институт / мектеп директоры",
+      "departmentSuffix": " кафедрасы",
+      "cycle": "Пән циклы",
+      "credits": "кредит",
+      "yearOfStudy": "курс",
+      "semester": "семестр",
+      "academicYear": "оқу жылы",
+      "lecturer": "Лектор",
+      "practice": "Практикалық жұмысты жүргізетін оқытушы",
+      "office": "Кеңсе",
+      "hours": "Кеңес беру уақыты",
+      "email": "Электрондық пошта",
+      "phone": "Телефон",
+      "approvedMeeting": "Кафедра отырысында қаралды және мақұлданды.",
+      "position": "Лауазымы",
+      "signature": "Аты-жөні / қолы",
+      "head": "Кафедра меңгерушісі",
+      "author": "Құрастырушы",
+      "agreed": "Келісілді:",
+      "total": "Барлығы",
+      "footer": "ҚазҰТЗУ 703-08 Ү. Силлабус",
+      "yearSuffix": " ж."
+    },
+    "ru": {
+      "syllabus": "СИЛЛАБУС",
+      "approve": "УТВЕРЖДАЮ",
+      "director": "Директор института / школы",
+      "departmentSuffix": " — кафедра",
+      "cycle": "Цикл дисциплины",
+      "credits": "кредитов",
+      "yearOfStudy": "курс",
+      "semester": "семестр",
+      "academicYear": "учебный год",
+      "lecturer": "Лектор",
+      "practice": "Преподаватель практических занятий",
+      "office": "Кабинет",
+      "hours": "Часы консультаций",
+      "email": "Электронная почта",
+      "phone": "Телефон",
+      "approvedMeeting": "Рассмотрено и одобрено на заседании кафедры.",
+      "position": "Должность",
+      "signature": "ФИО / подпись",
+      "head": "Заведующий кафедрой",
+      "author": "Составитель",
+      "agreed": "Согласовано:",
+      "total": "Всего",
+      "footer": "Ф КазНИТУ 703-08. Силлабус",
+      "yearSuffix": " г."
+    },
+    "en": {
+      "syllabus": "SYLLABUS",
+      "approve": "APPROVED BY",
+      "director": "Director of the Institute / School",
+      "departmentSuffix": " Department",
+      "cycle": "Course cycle",
+      "credits": "credits",
+      "yearOfStudy": "year of study",
+      "semester": "semester",
+      "academicYear": "academic year",
+      "lecturer": "Lecturer",
+      "practice": "Practical class instructor",
+      "office": "Office",
+      "hours": "Office hours",
+      "email": "Email",
+      "phone": "Phone",
+      "approvedMeeting": "Reviewed and approved at the department meeting.",
+      "position": "Position",
+      "signature": "Name / signature",
+      "head": "Head of department",
+      "author": "Prepared by",
+      "agreed": "Agreed by:",
+      "total": "Total",
+      "footer": "KazNRTU Form 703-08. Syllabus",
+      "yearSuffix": ""
+    }
+  }
+}

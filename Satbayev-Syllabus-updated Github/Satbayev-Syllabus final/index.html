@@ -493,7 +493,7 @@ syncMeta=function(){};
 const previousDisplayMeta=displayMeta;displayMeta=function(k,lang=S.lang){if(['university','protocol'].includes(k))return S.meta[k]||'';return previousDisplayMeta(k,lang)};
 canEdit=function(key){if(!currentUser)return false;const p=key.split(':');return !(p[0]==='table'&&+p[1]===8&&+p[2]>0&&(+p[3]===0||+p[3]===S.tables[8][0].length-1))};
 sectionTextEditable=n=>Number.isInteger(n)&&n>=0&&n<S.sections.length&&!!currentUser;
-courseOptions=function(){return (S.courses||[]).filter(c=>(c.programs||[]).includes(S.meta.program)&&(!c.studyYear||String(c.studyYear)===S.meta.studyYear)&&(!c.semester||String(c.semester)===S.meta.semester)).map(c=>({...c,title:c.titles?.[S.lang]||c.title}))};
+courseOptions=function(){return (S.courses||[]).filter(c=>(c.programs||[]).includes(S.meta.program)&&(!c.studyYear||String(c.studyYear)===S.meta.studyYear)&&(!c.semester||String(c.semester)===S.meta.semester)).map(c=>({...c,title:c.titles?.[S.lang]||c.title,cycle:c.cycles?.[S.lang]||c.cycle}))};
 field=function(k){const options=choices(k);return `<div class="field"><label for="f-${k}">${esc(T(k))}</label><input id="f-${k}" data-meta="${k}" value="${esc(S.meta[k]||'')}" ${options.length?`list="options-${k}"`:''}><datalist id="options-${k}">${options.map(x=>`<option value="${esc(x.value)}">${esc(x.group)}</option>`).join('')}</datalist></div>`};
 setMeta=function(k,value){S.meta[k]=value;const chain=['institute','department','program','studyYear','semester','course'];const pos=chain.indexOf(k);if(pos>=0&&pos<5){for(const child of chain.slice(pos+1))S.meta[child]='';S.meta.code=''}if(k==='institute'){const[i]=relation();S.meta.director=i?.director||''}if(k==='department'){const[,d]=relation();S.meta.head=d?.head||''}if(k==='course'){const c=courseOptions().find(x=>x.title===value);if(c)for(const key of ['code','credits','distribution','cycle','studyYear','semester'])if(c[key]!==undefined)S.meta[key]=String(c[key])}changed()};
 bindMeta=function(){document.querySelectorAll('[data-meta]').forEach(el=>{el.oninput=()=>setMeta(el.dataset.meta,el.value);el.onchange=()=>renderEditor()})};
@@ -529,7 +529,7 @@ function attachCurriculum(state){
  if(!dep.programs.includes(c.program))dep.programs.push(c.program);
  for(const [index,row]of c.courses.kk.entries()){
   const id=c.id+':'+row.code+':'+row.semester;
-  if(!state.courses.some(x=>x.curriculumId===id))state.courses.push({...row,curriculumId:id,programs:[c.program],titles:Object.fromEntries(['kk','ru','en'].map(lang=>[lang,c.courses[lang][index].title]))});
+  if(!state.courses.some(x=>x.curriculumId===id))state.courses.push({...row,curriculumId:id,programs:[c.program],titles:Object.fromEntries(['kk','ru','en'].map(lang=>[lang,c.courses[lang][index].title])),cycles:Object.fromEntries(['kk','ru','en'].map(lang=>[lang,c.courses[lang][index].cycle]))});
  }
 }
 for(let i=0;i<CURRICULUM.courses.kk.length;i++)addGroup(Object.fromEntries(['kk','ru','en'].map(lang=>[lang,CURRICULUM.courses[lang][i].title])));

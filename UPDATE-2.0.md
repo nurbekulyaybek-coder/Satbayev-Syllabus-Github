@@ -13,7 +13,7 @@ Existing `documents`, accounts and shared configuration remain in place. A user'
 
 The supplied 2026–2027 6B05208 Seismology curriculum has been incorporated: 81 offerings in each of Kazakh, Russian and English. Semester, credits and contact-hour allocations were cross-checked across all three language tables and visually against Russian pages 5–8. The source file name, SHA-256 and source page numbers are recorded in data/seismology-2026.json. Elective alternatives remain separate; military training has no semester or credit allocation in the source and is excluded from the semester selector. Existing personal data is retained when catalogue records are added.
 
-Before deploying to the existing Render service, verify the current database path and persistent disk, and make a database backup. `SYLLABUS_DB` can specify an absolute persistent path; the default remains `runtime/syllabus.sqlite3`. Preserve the existing database rather than initializing a replacement. The current server start arguments are retained.
+The owner selected the free Render demo without guaranteed data retention and confirmed no existing Render data needed migration. The original local database remains untouched. `SYLLABUS_DB` can specify a persistent path; the default remains `runtime/syllabus.sqlite3`. Back up runtime data before future updates.
 
 From `Satbayev-Syllabus-updated Github/Satbayev-Syllabus final`:
 
@@ -30,4 +30,6 @@ node tests/text-tools.test.cjs
 node tests/ux-dom.test.cjs
 ```
 
-DOM tests require `jsdom`. These tests are not a substitute for visual browser QA. The update has not been deployed or visually verified yet.
+DOM tests require `jsdom`. The 2.0 update was deployed to the existing Render service on 2026-11-13; HTTP availability and deployed source were verified, and the editor was visually reviewed locally. Live authenticated saving was not verified because browser access stopped.
+
+The language selector now changes only the interface (Kazakh, Russian, English), with a browser-local preference. It does not translate syllabus text, change document language, add Undo entries or save new document versions. Regression tests compare complete document/workspace state and preview content across all three choices.

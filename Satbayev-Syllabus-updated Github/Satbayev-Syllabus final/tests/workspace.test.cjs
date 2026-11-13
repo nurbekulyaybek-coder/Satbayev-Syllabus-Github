@@ -28,5 +28,21 @@ const dom=new JSDOM(fs.readFileSync(root+'/index.html','utf8'),{url:'http://loca
  w.eval("setMeta('course','Введение в сейсмологию')");assert.equal(w.eval('S.meta.code'),'GPH552');assert.equal(w.eval('S.meta.credits'),'4');assert.equal(w.eval('S.meta.distribution'),'30/15/0');assert.equal(w.eval('S.meta.year'),'2026–2027');
  w.eval("setMeta('studyYear','4');setMeta('semester','8');setMeta('course','Искусственный интеллект и анализ сейсмологических данных')");assert.equal(w.eval('S.meta.code'),'GPH548');assert.equal(w.eval('S.meta.credits'),'5');
  await w.eval('saveProjectNow()');await w.eval('loadDocument()');assert.equal(w.eval("S.courses.filter(c=>c.curriculumId).length"),81);
+
+ await w.eval('saveProjectNow()');w.eval('renderAll()');
+ const beforeLanguage=w.eval('JSON.stringify(S)'),beforeWorkspace=w.eval('JSON.stringify(workspace)'),beforeRevision=revision;
+ const beforePreview=w.document.querySelector('#pages').textContent;
+ for(const lang of ['en','ru','kk']){
+  await w.eval(`switchLanguage('${lang}')`);
+  assert.equal(w.document.documentElement.lang,lang);
+  assert.equal(w.eval('JSON.stringify(S)'),beforeLanguage,'language must not mutate syllabus');
+  assert.equal(w.eval('JSON.stringify(workspace)'),beforeWorkspace,'language must not mutate tabs or versions');
+  assert.equal(w.document.querySelector('#pages').textContent,beforePreview,'document preview must stay unchanged');
+  assert.equal(w.localStorage.getItem('syllabus-interface-language'),lang);
+ }
+ assert.equal(revision,beforeRevision,'language must not save or translate the document');
+ await w.eval("switchLanguage('en');loadDocument()");assert.equal(w.document.querySelector('#language').value,'en');
+ assert.equal(w.document.querySelectorAll('.workspace-actions button')[4].textContent,'Save version');
+ console.log('PASS: three interface languages preserve document, preview, tabs, versions and server revision; preference survives reload.');
  assert.equal(errors.length,0,errors.join('\n'));console.log('PASS: full startup, Undo/Redo, tab isolation, version persistence, reload, editable user fields, reset/undo and failed-save preservation.');
  }catch(e){console.error(e);process.exitCode=1}finally{dom.window.close()}})();

@@ -9,6 +9,8 @@ for name,nextname in [('paragraph','docTable'),('docTable','renderDocument'),('r
  start=inline.index('function '+name+'(');end=inline.index('\nfunction '+nextname+'(',start);app=app.replace('__'+name.upper()+'__',inline[start:end])
 app=app.replace('__SCALEPAGES__',inline[inline.index('function scalePages('):])
 app=app.replace('__EXTENSIONS__',(ROOT/'src/word-export.js').read_text(encoding='utf-8')+'\n'+(ROOT/'src/features.js').read_text(encoding='utf-8')+'\n'+(ROOT/'src/v3.js').read_text(encoding='utf-8')+'\n'+(ROOT/'src/v4.js').read_text(encoding='utf-8')+'\n'+(ROOT/'src/ux.js').read_text(encoding='utf-8')+'\n'+(ROOT/'src/text-tools.js').read_text(encoding='utf-8'))
+app=app.replace('bootstrap();', (ROOT/'src/workspace.js').read_text(encoding='utf-8')+'\nbootstrap();')
+app=app.replace('__CURRICULUM_DATA__',json.dumps(json.loads((ROOT/'data/seismology-2026.json').read_text(encoding='utf-8')),ensure_ascii=False).replace('<','\\u003c'))
 if re.search(r'__[A-Z]+__',app):raise RuntimeError('Unexpanded source placeholder')
 css=(ROOT/'src/styles.css').read_text(encoding='utf-8')
 shell=(ROOT/'src/shell.html').read_text(encoding='utf-8')

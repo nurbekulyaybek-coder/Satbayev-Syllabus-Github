@@ -5,7 +5,7 @@ const root=path.resolve(__dirname,'..');let stored=JSON.parse(fs.readFileSync(ro
 const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
 const dom=new JSDOM(fs.readFileSync(root+'/index.html','utf8'),{url:'http://localhost:8765',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,beforeParse(w){
  w.structuredClone=structuredClone;w.TextEncoder=TextEncoder;w.Blob=Blob;
- w.fetch=async(url,opts={})=>({ok:true,json:async()=>{if(url!=='/api/document')return {configured:false};if(opts.method==='PUT'){stored=JSON.parse(opts.body).state;return {version:++version,configVersion:0}}return {state:structuredClone(stored),user:{role:'admin',name:'Test',username:'test',csrf:'x'},version,configVersion:0}}});
+ w.fetch=async(url,opts={})=>({ok:true,json:async()=>{if(url==='/api/me')return {user:{role:'admin',name:'Test',username:'test',csrf:'x'}};if(url==='/api/workspace'){if(opts.method==='PUT'){stored=JSON.parse(opts.body).workspace.documents[0].state;return {revision:++version}}return {workspace:{activeId:'original',documents:[{id:'original',name:'Test',state:structuredClone(stored),versions:[]}]},revision:version}}if(url!=='/api/document')return {configured:false};if(opts.method==='PUT'){stored=JSON.parse(opts.body).state;return {version:++version,configVersion:0}}return {state:structuredClone(stored),user:{role:'admin',name:'Test',username:'test',csrf:'x'},version,configVersion:0}}});
  Object.defineProperty(w.navigator,'clipboard',{configurable:true,value:{writeText:async s=>{clipboard=s},readText:async()=>clipboard}});
  w.HTMLElement.prototype.scrollTo=function(opts){this.scrollTop=opts.top||0};
 }});
@@ -33,9 +33,9 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   Object.defineProperty(w.navigator,'clipboard',{value:undefined});await w.pasteSectionText(area,2);assert.equal(d.activeElement,area);assert(d.querySelector('#toast').textContent.includes('Ctrl+V'));
   // Exported HTML contains the document, without interactive plus controls/placeholders.
   let exported;w.download=(blob)=>{exported=blob};w.saveHTML();const snapshot=new JSDOM(await exported.text());assert(!snapshot.window.document.querySelector('.paragraph-actions'));assert(!snapshot.window.document.querySelector('[data-placeholder]'));assert(snapshot.window.document.querySelector('p.empty-paragraph'));snapshot.window.close();
-  // Read-only template policies retain Copy but cannot be modified via Paste or Plus.
-  w.eval("currentUser.role='user';S.active=12;renderEditor();renderDocument()");assert(d.querySelector('#sectext').readOnly);assert(d.querySelector('#pasteSectionText').disabled);assert(!d.querySelector('#addSectionParagraph'));assert(!d.querySelector('[data-add-paragraph^="line:11:"]'));assert(!d.querySelector('[data-add-paragraph^="line:12:"]'));
+  // Personal template policies are editable for the owning teacher.
+  w.eval("currentUser.role='user';S.active=12;renderEditor();renderDocument()");assert(!d.querySelector('#sectext').readOnly);assert(!d.querySelector('#pasteSectionText').disabled);assert(d.querySelector('[data-add-paragraph^="line:11:"]'));
   assert.equal(errors.length,0,errors.join('\n'));
-  console.log('PASS: empty paragraph stays editable, text restoration without reload, insertion at caret/in document, following text retained, clipboard copy/paste and keyboard fallback, save/reload, protected policies.');
+  console.log('PASS: empty paragraph stays editable, text restoration without reload, insertion at caret/in document, following text retained, clipboard copy/paste and keyboard fallback, save/reload, editable personal policies.');
  }finally{dom.window.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,8 @@
+**/runtime/
+**/__pycache__/
+**/node_modules/
+**/tests/compiled-app.js
+**/tests/*.docx
+**/*.sqlite3*
+**/.env
+**/ai-config.json

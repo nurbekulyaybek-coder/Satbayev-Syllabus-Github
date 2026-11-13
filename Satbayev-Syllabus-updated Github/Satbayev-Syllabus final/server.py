@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import date
 from decimal import Decimal
 import ai_service
+import workspace_store
 from language_data import PACKS,localize,known,canonical,equivalent,set_path
 import argparse,copy,hashlib,hmac,json,os,re,secrets,sqlite3,time,io,zipfile,webbrowser,threading
 ROOT=Path(__file__).resolve().parent
@@ -13,7 +14,7 @@ CONFIG_KEYS=['catalog','programDirectory','relations','courses','format']
 LOCKED_SECTIONS=[11,12]
 LOCKED_TABLES=['9','10']
 SEED=json.loads((ROOT/'data/initial-state.json').read_text(encoding='utf-8'))
-DB=ROOT/'runtime/syllabus.sqlite3'
+DB=Path(os.environ.get('SYLLABUS_DB', str(ROOT/'runtime/syllabus.sqlite3')))
 def connect():
  con=sqlite3.connect(DB,timeout=15);con.row_factory=sqlite3.Row;con.execute('PRAGMA foreign_keys=ON');return con
 def digest(password,salt):return hashlib.scrypt(password.encode(),salt=bytes.fromhex(salt),n=16384,r=8,p=1).hex()
@@ -28,6 +29,7 @@ def initialize():
    for username,name,role,password in [('admin','Әкімші','admin',os.environ.get('SYLLABUS_ADMIN_PASSWORD','SatbayevAdmin#2026')),('user','Оқытушы','user',os.environ.get('SYLLABUS_USER_PASSWORD','Teacher#2026'))]:
     uid=con.execute('INSERT INTO users(username,name,role) VALUES(?,?,?)',(username,name,role)).lastrowid;set_password(con,uid,password)
   con.execute('INSERT OR IGNORE INTO config(id,state) VALUES(1,?)',(json.dumps(SEED,ensure_ascii=False),))
+  workspace_store.initialize(con)
  try:os.chmod(DB,0o600)
  except OSError:pass
 
@@ -139,7 +141,7 @@ class Handler(BaseHTTPRequestHandler):
  def body(self):
   if self.headers.get('Content-Type','').split(';')[0]!='application/json':raise ValueError('Ожидается JSON')
   n=int(self.headers.get('Content-Length','0'))
-  if not 0<n<=2000000:raise ValueError('Слишком большой запрос')
+  if not 0<n<=(32000000 if self.path=='/api/workspace' else 2000000):raise ValueError('Слишком большой запрос')
   origin=self.headers.get('Origin')
   if origin and origin.split('://')[-1]!=self.headers.get('Host'):raise PermissionError('Чужой источник запроса')
   return json.loads(self.rfile.read(n))
@@ -157,12 +159,14 @@ class Handler(BaseHTTPRequestHandler):
     b=(ROOT/'index.html').read_bytes();self.send_response(200);self.send_header('Content-Type','text/html; charset=utf-8');self.send_header('Content-Length',str(len(b)));self.send_header('Cache-Control','no-store');self.send_header('X-Frame-Options','DENY');self.send_header('X-Content-Type-Options','nosniff');self.end_headers();self.wfile.write(b);return
    with connect() as con:
     s=self.session(con)
+    if self.path=='/api/workspace':
+     payload,revision=workspace_store.load(con,s['user_id'],lambda:self.state(con,s['user_id'])[0]);return self.respond(200,{'workspace':payload,'revision':revision})
     if self.path=='/api/admin/project':
      if s['role']!='admin':raise PermissionError('Только admin')
      out=io.BytesIO()
      with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
       for p in ROOT.rglob('*'):
-       if p.is_file() and not any(x in p.parts for x in ['runtime','__pycache__','.git']) and p.suffix not in ['.sqlite3','.docx','.zip'] and p.name not in ['compiled-app.js','ai-config.json','.env']:z.write(p,'Satbayev-Syllabus/'+str(p.relative_to(ROOT)))
+       if p.is_file() and not any(x in p.parts for x in ['runtime','__pycache__','.git','node_modules']) and p.suffix not in ['.sqlite3','.docx','.zip'] and p.name not in ['compiled-app.js','ai-config.json','.env']:z.write(p,'Satbayev-Syllabus/'+str(p.relative_to(ROOT)))
      b=out.getvalue();self.send_response(200);self.send_header('Content-Type','application/zip');self.send_header('Content-Length',str(len(b)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(b);return
     if self.path=='/api/ai/status':return self.respond(200,ai_service.status())
     if self.path=='/api/me':return self.respond(200,{'user':self.user_info(s)})
@@ -194,7 +198,11 @@ class Handler(BaseHTTPRequestHandler):
      if self.path=='/api/ai/chat':return self.respond(200,ai_service.chat(data))
      target=data.get('target')
      if target not in PACKS:raise ValueError('Неизвестный язык')
-     current,_,_=self.state(con,s['user_id']);source=validate(data.get('state'),current,s['role'],con);result,unknown=localize(source,target,con)
+     if data.get('personal'):
+      source=data.get('state');workspace_store.validate_state(source,SEED)
+     else:
+      current,_,_=self.state(con,s['user_id']);source=validate(data.get('state'),current,s['role'],con)
+     result,unknown=localize(source,target,con)
      if len(unknown)>500 or sum(len(text) for _,text in unknown)>180000:raise ValueError('Слишком большой объём перевода за один запрос')
      unique=list(dict.fromkeys(text for _,text in unknown));mapping={}
      for start in range(0,len(unique),15):
@@ -238,6 +246,10 @@ class Handler(BaseHTTPRequestHandler):
    data=self.body()
    with connect() as con:
     s=self.session(con,True)
+    if self.path=='/api/workspace':
+     revision=workspace_store.save(con,s['user_id'],data.get('workspace'),data.get('revision'),SEED)
+     if revision is None:return self.respond(409,{'error':'Данные изменены в другом окне. Скачайте JSON-копию и обновите страницу.'})
+     return self.respond(200,{'revision':revision})
     if self.path!='/api/document':return self.respond(404,{'error':'Не найдено'})
     con.execute('BEGIN IMMEDIATE');current,v,cv=self.state(con,s['user_id'])
     if data.get('version')!=v or data.get('configVersion')!=cv:return self.respond(409,{'error':'Документ или настройки изменились. Обновите данные перед сохранением.'})

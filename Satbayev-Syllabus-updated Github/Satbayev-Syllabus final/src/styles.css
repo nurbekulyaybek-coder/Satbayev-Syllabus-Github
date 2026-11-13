@@ -23,3 +23,6 @@ header{height:auto;min-height:76px;flex-wrap:wrap;padding-top:10px;padding-botto
 
 /* Keep add controls visible in the page margin; the A4 sheet still clips page overflow. */
 .sheet .body{overflow:visible}
+
+/* Syllabus 2.0 workspace */
+#workspaceBar{background:#f7f9fd;border-bottom:1px solid #dce4ef;padding:10px 24px;display:grid;gap:10px}.document-tabs,.workspace-actions{display:flex;gap:8px;overflow:auto}.document-tabs button{white-space:nowrap;border-radius:10px;padding:10px 18px}.document-tabs [aria-selected=true]{background:#143967;color:white;border-color:#143967}.workspace-actions button{white-space:nowrap;font-size:12px}.workspace-actions button:disabled{opacity:.4;cursor:default}.version-row{display:flex;gap:8px;align-items:center;padding:14px 0;border-bottom:1px solid #ddd}.version-row span{flex:1}#versionsDialog{width:min(850px,94vw);max-height:85vh}#versionsDialog pre{white-space:pre-wrap;padding:20px;max-height:40vh;overflow:auto}.authenticated .layout{height:calc(100vh - 188px)}.authenticated .editor,.authenticated .preview{max-height:calc(100vh - 188px)}.tech{display:none}@media(max-width:600px){#workspaceBar{padding:10px}.authenticated .layout{height:auto}.authenticated .editor,.authenticated .preview{max-height:none}.version-row{flex-wrap:wrap}}@media print{#workspaceBar{display:none!important}.authenticated .layout{height:auto}}

@@ -14,7 +14,8 @@ def validate_state(state, seed):
     if not isinstance(state, dict):
         raise ValueError('Некорректный силлабус')
     meta = state.get('meta')
-    if not isinstance(meta, dict) or set(meta) != set(seed['meta']) or any(not isinstance(v, str) or len(v) > 6000 for v in meta.values()):
+    optional_meta = {'practiceOffice', 'practiceHours', 'practiceEmail', 'studyMode', 'directorTitle'}
+    if not isinstance(meta, dict) or not set(seed['meta']).issubset(meta) or not set(meta).issubset(set(seed['meta']) | optional_meta) or any(not isinstance(v, str) or len(v) > 6000 for v in meta.values()):
         raise ValueError('Некорректные поля силлабуса')
     if state.get('lang') not in ('kk', 'ru', 'en'):
         raise ValueError('Неизвестный язык')

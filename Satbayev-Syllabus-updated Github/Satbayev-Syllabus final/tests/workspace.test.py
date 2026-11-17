@@ -19,6 +19,9 @@ with tempfile.TemporaryDirectory() as tmp:
         status,data=user.request('/api/workspace');assert status==200
         ws=data['workspace'];assert ws['documents'][0]['state']==legacy
         ws['documents'][0]['state']['meta']['university']='Personal university'
+        ws['documents'][0]['state']['meta']['practiceEmail']='practice@example.test'
+        ws['documents'][0]['state']['meta']['practiceOffice']='Separate office'
+        ws['documents'][0]['state']['meta']['directorTitle']='Approving officer'
         ws['documents'][0]['state']['sections'][12]['title']='Editable title'
         ws['documents'][0]['versions'].append({'name':'Before edit','created':'2026-11-13','state':copy.deepcopy(legacy)})
         second=copy.deepcopy(ws['documents'][0]);second.update(id='second',name='Second',versions=[])

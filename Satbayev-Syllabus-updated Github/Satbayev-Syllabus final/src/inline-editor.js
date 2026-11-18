@@ -1,7 +1,7 @@
 function paragraph(txt,key=''){
  if(!txt.trim()&&!/^(line|agreement):/.test(key))return;txt=renderText(txt);
- let p=document.createElement('p'),b=pageBodies.at(-1);p.textContent=txt;if(!txt.trim())p.classList.add('empty-paragraph');if(key)setEditable(p,key,true);b.append(p);if(!overflow(b)){decorateParagraph(p,key);return}p.remove();if(!txt.trim()){newPage();pageBodies.at(-1).append(p);decorateParagraph(p,key);return}let rest=txt;
- while(rest){b=pageBodies.at(-1);p=document.createElement('p');b.append(p);let lo=0,hi=rest.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2);p.textContent=rest.slice(0,mid);if(overflow(b))hi=mid-1;else lo=mid}if(!lo){p.remove();newPage();continue}let cut=lo;if(lo<rest.length){let space=rest.lastIndexOf(' ',lo);if(space>lo*.65)cut=space+1}p.textContent=rest.slice(0,cut);if(key)setEditable(p,key,true);rest=rest.slice(cut);if(rest)newPage();else decorateParagraph(p,key)}
+ let p=document.createElement('p'),b=pageBodies.at(-1);standardParagraphText(p,txt);if(!txt.trim())p.classList.add('empty-paragraph');if(key)setEditable(p,key,true);b.append(p);if(!overflow(b)){decorateParagraph(p,key);return}p.remove();if(!txt.trim()){newPage();pageBodies.at(-1).append(p);decorateParagraph(p,key);return}let rest=txt;
+ while(rest){b=pageBodies.at(-1);p=document.createElement('p');b.append(p);let lo=0,hi=rest.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2);p.textContent=rest.slice(0,mid);if(overflow(b))hi=mid-1;else lo=mid}if(!lo){p.remove();newPage();continue}let cut=lo;if(lo<rest.length){let space=rest.lastIndexOf(' ',lo);if(space>lo*.65)cut=space+1}standardParagraphText(p,rest.slice(0,cut));if(rest!==txt)p.style.textIndent='0';if(key)setEditable(p,key,true);rest=rest.slice(cut);if(rest)newPage();else decorateParagraph(p,key)}
 }
 function docTable(rows,n,keys=null){
  let table,tbody;
@@ -14,15 +14,16 @@ function renderDocument(){
  let preview=document.querySelector('.preview'),oldStyle=preview.getAttribute('style');if(!preview.offsetWidth)preview.style.cssText='display:block;position:fixed;left:-10000px;top:0;width:850px;max-height:none;visibility:hidden';let prior=$('pages').innerHTML;
  try{
  $('pages').innerHTML='';pageBodies=[];inlineBaseLines=S.sections.map(x=>x.text.split('\n'));inlineBaseAgreement=S.meta.agreement.split('\n');let m=S.meta,b=newPage(true);
- const meta=(k,cls='')=>`<span ${cls?`class="${cls}"`:''} data-edit="meta:${k}">${esc(displayMeta(k))}</span>`;
- b.innerHTML=`<p class="institute" data-edit="meta:institute">${esc(displayMeta('institute'))}</p><p data-edit="meta:department">${esc(displayMeta('department'))}</p><div class="approval">${esc(D('approve'))}\n${esc(D('director'))}\n____________ ${meta('director')}\n${meta('approvalDate')}</div><h1>${esc(D('syllabus'))}</h1><p class="course">${meta('code')} ${meta('course')}</p><p data-edit="meta:program">${esc(displayMeta('program'))}</p><p>${esc(D('cycle'))} ${meta('cycle')}, ${meta('credits')} (${meta('distribution')}) ${esc(D('credits'))}</p><p>${esc(D('yearOfStudy'))} ${meta('studyYear')}, ${esc(D('semester'))} ${meta('semester')}</p><p>${esc(D('academicYear'))} ${meta('year')}</p><p class="city">${meta('city')} ${meta('date')}</p>`;
- b.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));
+ standardCover(b);
  newPage();S.sections.forEach((sec,n)=>{
  let current=pageBodies.at(-1);if(current.lastElementChild&&current.clientHeight-(current.lastElementChild.offsetTop-current.offsetTop+current.lastElementChild.offsetHeight)<80)newPage();let h=document.createElement('h2');h.textContent=sec.title;setEditable(h,`title:${n}`);addBlock(h);
- if(n===0){let q=document.createElement('p');q.innerHTML=`1.1 ${esc(D('lecturer'))}: ${meta('lecturer')}`;addBlock(q);q.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));q=document.createElement('p');q.innerHTML=`1.2 ${esc(D('practice'))}: ${meta('practice')}`;addBlock(q);q.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));docTable([[D('office'),D('hours'),D('email'),D('phone')],[displayMeta('office'),displayMeta('officeHours'),m.email,m.phone]],-1,[[],['meta:office','meta:officeHours','meta:email','meta:phone']])}
- sec.text.split('\n').forEach((txt,i)=>paragraph(txt,`line:${n}:${i}`));if(S.tables[n])docTable(S.tables[n],n);
+ if(n===0)standardTeachers();
+ else if(!standardTableOnly.has(n))sec.text.split('\n').forEach((txt,i)=>{if(n!==10||!isFormula(txt)&&!isSupplement(txt))paragraph(txt,`line:${n}:${i}`)});
+ if(S.tables[n]){if(n===8)standardScores();else docTable(S.tables[n],n)}
+ if(n===10)sec.text.split('\n').forEach((txt,i)=>{if(isFormula(txt)){paragraph(txt,`line:${n}:${i}`);pageBodies.at(-1).lastElementChild?.classList.add('formula')}});
+
  });
- paragraph(D('approvedMeeting'));paragraph(displayMeta('protocol'),'meta:protocol');docTable([[D('position'),D('signature')],[D('head'),displayMeta('head')],[D('author'),displayMeta('author')]],-1,[[],['','meta:head'],['','meta:author']]);paragraph(D('agreed'));m.agreement.split('\n').forEach((x,i)=>paragraph(x,`agreement:${i}`));
+ standardSignatures();standardPrintStyle();
  $('pageCount').textContent=pageBodies.length+' '+T('pages')+' · A4';if(S.active===15)checks();
  }catch(e){$('pages').innerHTML=prior;toast('Құжатты құру қатесі: '+e.message)}finally{if(oldStyle===null)preview.removeAttribute('style');else preview.setAttribute('style',oldStyle);scalePages()}
 }

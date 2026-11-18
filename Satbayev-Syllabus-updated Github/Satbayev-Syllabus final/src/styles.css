@@ -26,3 +26,61 @@ header{height:auto;min-height:76px;flex-wrap:wrap;padding-top:10px;padding-botto
 
 /* Syllabus 2.0 workspace */
 #workspaceBar{background:#f7f9fd;border-bottom:1px solid #dce4ef;padding:10px 24px;display:grid;gap:10px}.document-tabs,.workspace-actions{display:flex;gap:8px;overflow:auto}.document-tabs button{white-space:nowrap;border-radius:10px;padding:10px 18px}.document-tabs [aria-selected=true]{background:#143967;color:white;border-color:#143967}.workspace-actions button{white-space:nowrap;font-size:12px}.workspace-actions button:disabled{opacity:.4;cursor:default}.version-row{display:flex;gap:8px;align-items:center;padding:14px 0;border-bottom:1px solid #ddd}.version-row span{flex:1}#versionsDialog{width:min(850px,94vw);max-height:85vh}#versionsDialog pre{white-space:pre-wrap;padding:20px;max-height:40vh;overflow:auto}.authenticated .layout{height:calc(100vh - 188px)}.authenticated .editor,.authenticated .preview{max-height:calc(100vh - 188px)}.tech{display:none}@media(max-width:600px){#workspaceBar{padding:10px}.authenticated .layout{height:auto}.authenticated .editor,.authenticated .preview{max-height:none}.version-row{flex-wrap:wrap}}@media print{#workspaceBar{display:none!important}.authenticated .layout{height:auto}}
+/* Approved university template, shared by the live document and HTML/PDF. */
+.sheet.standard-sheet{padding:7.5mm 15mm 20mm 30mm;font-size:14pt;line-height:1;}
+.standard-sheet .dochead{font-size:10pt;font-weight:normal;line-height:1.05;border:0;padding:0;margin:0 0 8mm}
+.standard-sheet .foot{left:30mm;right:15mm;font-size:10pt;bottom:7mm}
+.standard-sheet p{margin:0;text-indent:12.5mm;text-align:justify;line-height:1.05}
+.standard-sheet h2{font-size:14pt;line-height:1.05;margin:8pt 0 5pt;text-indent:12.5mm}
+.standard-sheet .teacher-block{margin:5pt 0 12pt;break-inside:avoid}
+.standard-sheet .teacher-contacts{display:grid;grid-template-columns:42.4% 57.6%;margin:16pt 0 0;line-height:1.1;overflow-wrap:anywhere}
+.standard-sheet .study-mode{font-weight:bold;margin:12pt 0;text-indent:15mm}
+.standard-sheet .teacher-block>p{text-indent:15mm}
+.standard-sheet .teacher-block>p br+span{display:inline-block;margin-left:15mm;text-indent:0}
+.standard-sheet .signatures{margin:14pt 0;break-inside:avoid;page-break-inside:avoid}
+.standard-sheet .signatures p{display:flex;justify-content:space-between;text-indent:0;margin:10pt 0}
+.standard-sheet .formula{font-weight:bold}
+.standard-sheet.cover .university-logo{display:block;width:121mm;height:31mm;object-fit:contain;margin:2mm auto 12mm}
+.standard-sheet.cover .institute{margin:0 0 12mm;text-align:center}
+.standard-sheet.cover .department{text-align:center;margin:0}
+.standard-sheet.cover .approval{width:89mm;margin:15mm 0 49mm auto;line-height:1.05}
+.standard-sheet.cover h1{font:bold 14pt 'Times New Roman',serif;margin:0 0 12mm}
+.standard-sheet.cover p{text-align:center;margin-bottom:5pt;text-indent:0}
+.standard-sheet.cover .course{font-size:14pt;margin-bottom:12mm}
+.standard-sheet.cover .city{bottom:20mm}
+.standard-sheet .standard-table{font-size:12pt;line-height:1;margin:4pt 0 8pt;width:100%}
+.standard-sheet .standard-table td,.standard-sheet .standard-table th{padding:0 3pt;vertical-align:middle;font-weight:normal;border:.5pt solid #000}
+.standard-sheet .standard-table th{font-weight:bold}
+.standard-sheet .table-1 col:first-child{width:30%!important}
+.standard-sheet .table-10{font-size:11pt}
+.standard-sheet .score-matrix{font-size:12pt}
+.standard-sheet .score-matrix td,.standard-sheet .score-matrix th{padding:1pt;line-height:1;text-align:center}
+.standard-sheet .score-matrix td:nth-child(2){text-align:left}
+.standard-sheet .score-matrix .inline-score{text-align:center}
+.standard-sheet .score-matrix th{font-size:9pt}
+.standard-sheet .standard-total td{font-weight:bold}
+.standard-sheet .table-7 th{font-size:11pt}
+/* Let the print engine paginate the content, not the scaled screen wrappers.
+   Fixed A4 wrappers plus user print margins caused an extra blank page per sheet. */
+#printDocument{display:none}
+@page{size:A4;margin:7.5mm 15mm 20mm 30mm;@bottom-left{content:'ҚазҰТЗУ 703-08 Ү. Силлабус';font:10pt 'Times New Roman'}@bottom-right{content:counter(page);font:10pt 'Times New Roman'}}
+@page:first{@bottom-left{content:none}@bottom-right{content:none}}
+@media print{
+ html,body{margin:0!important;padding:0!important;height:auto!important;overflow:visible!important}
+ .layout,.preview,#pages{height:auto!important;max-height:none!important;overflow:visible!important;width:auto!important;padding:0!important;margin:0!important}
+ .sheet-wrap,.sheet.standard-sheet,.standard-sheet .body{display:contents!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;transform:none!important;overflow:visible!important;break-after:auto!important;page-break-after:auto!important}
+ .sheet.standard-sheet{padding:0!important;box-shadow:none!important}
+ .standard-sheet .dochead,.standard-sheet .foot{display:none!important}
+ .sheet.standard-sheet.cover{display:block!important;height:265mm!important;position:relative;break-after:page!important;page-break-after:always!important}
+ .standard-sheet.cover .city{left:0;right:0;bottom:0}
+ #pages{display:none!important}
+ #printDocument{display:block!important;font:14pt/1 'Times New Roman',serif;color:#000}
+ #printDocument .print-flow{display:block!important;position:static!important;height:auto!important;min-height:0!important;width:auto!important;overflow:visible!important}
+ .standard-sheet h2{break-after:avoid;page-break-after:avoid}
+ .standard-sheet p{orphans:2;widows:2}
+ .standard-sheet table{break-inside:auto;page-break-inside:auto}
+ .standard-sheet .score-matrix{break-inside:avoid;page-break-inside:avoid}
+ .standard-sheet tr,.teacher-block{break-inside:avoid;page-break-inside:avoid}
+ .standard-sheet thead{display:table-header-group}
+ .standard-sheet [data-edit]{outline:0!important;box-shadow:none!important;background:transparent!important}
+}

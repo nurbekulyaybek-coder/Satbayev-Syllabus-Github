@@ -2,7 +2,7 @@
   "name": "satbayev-syllabus-tests",
   "private": true,
   "scripts": {
-    "test": "node tests/workspace.test.cjs && node tests/ux-dom.test.cjs && node tests/text-tools.test.cjs && node tests/ui-logic.test.cjs && node tests/export.test.cjs"
+    "test": "node tests/workspace.test.cjs && node tests/ux-dom.test.cjs && node tests/text-tools.test.cjs && node tests/ui-logic.test.cjs && node tests/export.test.cjs && node tests/template-export.test.cjs && node tests/standard-preview.test.cjs"
   },
   "devDependencies": { "jsdom": "31.0.1" }
 }

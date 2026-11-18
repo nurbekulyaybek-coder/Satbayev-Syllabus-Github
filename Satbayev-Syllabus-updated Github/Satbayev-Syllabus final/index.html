@@ -27,6 +27,64 @@ header{height:auto;min-height:76px;flex-wrap:wrap;padding-top:10px;padding-botto
 
 /* Syllabus 2.0 workspace */
 #workspaceBar{background:#f7f9fd;border-bottom:1px solid #dce4ef;padding:10px 24px;display:grid;gap:10px}.document-tabs,.workspace-actions{display:flex;gap:8px;overflow:auto}.document-tabs button{white-space:nowrap;border-radius:10px;padding:10px 18px}.document-tabs [aria-selected=true]{background:#143967;color:white;border-color:#143967}.workspace-actions button{white-space:nowrap;font-size:12px}.workspace-actions button:disabled{opacity:.4;cursor:default}.version-row{display:flex;gap:8px;align-items:center;padding:14px 0;border-bottom:1px solid #ddd}.version-row span{flex:1}#versionsDialog{width:min(850px,94vw);max-height:85vh}#versionsDialog pre{white-space:pre-wrap;padding:20px;max-height:40vh;overflow:auto}.authenticated .layout{height:calc(100vh - 188px)}.authenticated .editor,.authenticated .preview{max-height:calc(100vh - 188px)}.tech{display:none}@media(max-width:600px){#workspaceBar{padding:10px}.authenticated .layout{height:auto}.authenticated .editor,.authenticated .preview{max-height:none}.version-row{flex-wrap:wrap}}@media print{#workspaceBar{display:none!important}.authenticated .layout{height:auto}}
+/* Approved university template, shared by the live document and HTML/PDF. */
+.sheet.standard-sheet{padding:7.5mm 15mm 20mm 30mm;font-size:14pt;line-height:1;}
+.standard-sheet .dochead{font-size:10pt;font-weight:normal;line-height:1.05;border:0;padding:0;margin:0 0 8mm}
+.standard-sheet .foot{left:30mm;right:15mm;font-size:10pt;bottom:7mm}
+.standard-sheet p{margin:0;text-indent:12.5mm;text-align:justify;line-height:1.05}
+.standard-sheet h2{font-size:14pt;line-height:1.05;margin:8pt 0 5pt;text-indent:12.5mm}
+.standard-sheet .teacher-block{margin:5pt 0 12pt;break-inside:avoid}
+.standard-sheet .teacher-contacts{display:grid;grid-template-columns:42.4% 57.6%;margin:16pt 0 0;line-height:1.1;overflow-wrap:anywhere}
+.standard-sheet .study-mode{font-weight:bold;margin:12pt 0;text-indent:15mm}
+.standard-sheet .teacher-block>p{text-indent:15mm}
+.standard-sheet .teacher-block>p br+span{display:inline-block;margin-left:15mm;text-indent:0}
+.standard-sheet .signatures{margin:14pt 0;break-inside:avoid;page-break-inside:avoid}
+.standard-sheet .signatures p{display:flex;justify-content:space-between;text-indent:0;margin:10pt 0}
+.standard-sheet .formula{font-weight:bold}
+.standard-sheet.cover .university-logo{display:block;width:121mm;height:31mm;object-fit:contain;margin:2mm auto 12mm}
+.standard-sheet.cover .institute{margin:0 0 12mm;text-align:center}
+.standard-sheet.cover .department{text-align:center;margin:0}
+.standard-sheet.cover .approval{width:89mm;margin:15mm 0 49mm auto;line-height:1.05}
+.standard-sheet.cover h1{font:bold 14pt 'Times New Roman',serif;margin:0 0 12mm}
+.standard-sheet.cover p{text-align:center;margin-bottom:5pt;text-indent:0}
+.standard-sheet.cover .course{font-size:14pt;margin-bottom:12mm}
+.standard-sheet.cover .city{bottom:20mm}
+.standard-sheet .standard-table{font-size:12pt;line-height:1;margin:4pt 0 8pt;width:100%}
+.standard-sheet .standard-table td,.standard-sheet .standard-table th{padding:0 3pt;vertical-align:middle;font-weight:normal;border:.5pt solid #000}
+.standard-sheet .standard-table th{font-weight:bold}
+.standard-sheet .table-1 col:first-child{width:30%!important}
+.standard-sheet .table-10{font-size:11pt}
+.standard-sheet .score-matrix{font-size:12pt}
+.standard-sheet .score-matrix td,.standard-sheet .score-matrix th{padding:1pt;line-height:1;text-align:center}
+.standard-sheet .score-matrix td:nth-child(2){text-align:left}
+.standard-sheet .score-matrix .inline-score{text-align:center}
+.standard-sheet .score-matrix th{font-size:9pt}
+.standard-sheet .standard-total td{font-weight:bold}
+.standard-sheet .table-7 th{font-size:11pt}
+/* Let the print engine paginate the content, not the scaled screen wrappers.
+   Fixed A4 wrappers plus user print margins caused an extra blank page per sheet. */
+#printDocument{display:none}
+@page{size:A4;margin:7.5mm 15mm 20mm 30mm;@bottom-left{content:'ҚазҰТЗУ 703-08 Ү. Силлабус';font:10pt 'Times New Roman'}@bottom-right{content:counter(page);font:10pt 'Times New Roman'}}
+@page:first{@bottom-left{content:none}@bottom-right{content:none}}
+@media print{
+ html,body{margin:0!important;padding:0!important;height:auto!important;overflow:visible!important}
+ .layout,.preview,#pages{height:auto!important;max-height:none!important;overflow:visible!important;width:auto!important;padding:0!important;margin:0!important}
+ .sheet-wrap,.sheet.standard-sheet,.standard-sheet .body{display:contents!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;transform:none!important;overflow:visible!important;break-after:auto!important;page-break-after:auto!important}
+ .sheet.standard-sheet{padding:0!important;box-shadow:none!important}
+ .standard-sheet .dochead,.standard-sheet .foot{display:none!important}
+ .sheet.standard-sheet.cover{display:block!important;height:265mm!important;position:relative;break-after:page!important;page-break-after:always!important}
+ .standard-sheet.cover .city{left:0;right:0;bottom:0}
+ #pages{display:none!important}
+ #printDocument{display:block!important;font:14pt/1 'Times New Roman',serif;color:#000}
+ #printDocument .print-flow{display:block!important;position:static!important;height:auto!important;min-height:0!important;width:auto!important;overflow:visible!important}
+ .standard-sheet h2{break-after:avoid;page-break-after:avoid}
+ .standard-sheet p{orphans:2;widows:2}
+ .standard-sheet table{break-inside:auto;page-break-inside:auto}
+ .standard-sheet .score-matrix{break-inside:avoid;page-break-inside:avoid}
+ .standard-sheet tr,.teacher-block{break-inside:avoid;page-break-inside:avoid}
+ .standard-sheet thead{display:table-header-group}
+ .standard-sheet [data-edit]{outline:0!important;box-shadow:none!important;background:transparent!important}
+}
 </style></head><body>
 <div id="loginScreen"><div class="login-card"><div class="monogram">S</div><div class="eyebrow">SATBAYEV UNIVERSITY</div><h1>Syllabus Studio</h1><p id="loginMessage">Жүктелуде / Загрузка…</p><form id="loginForm"><div class="field"><label for="loginUsername">Логин</label><input id="loginUsername" autocomplete="username" required></div><div class="field"><label for="loginPassword">Құпиясөз / Пароль</label><input id="loginPassword" type="password" autocomplete="current-password" required></div><p id="loginError" role="alert"></p><button class="primary" type="submit">Кіру / Войти</button></form></div></div>
 <header><div class="brand"><div class="monogram">S</div><div><strong>SATBAYEV UNIVERSITY</strong><small>ACADEMIC WORKSPACE</small></div></div><div class="top-title"><strong>Syllabus Studio</strong><span id="tagline"></span></div><div class="actions"><button id="accountButton" onclick="profile()">Аккаунт</button><select id="language" class="lang" aria-label="Syllabus language"><option value="kk">ҚАЗ</option><option value="ru">РУС</option><option value="en">ENG</option></select><details id="exportMenu" class="export-menu"><summary id="exportLabel">Экспорт ▾</summary><div class="export-options"><button class="backup" id="backupBtn" onclick="exportJSON()"></button><button id="saveBtn" onclick="saveHTML()"></button></div></details><button id="persistBtn" onclick="saveProjectNow()">Сақтау</button><button id="wordBtn" onclick="exportWord()">Word</button><button class="primary" id="printBtn" onclick="printDoc()"></button></div></header>
@@ -85,8 +143,8 @@ function overflow(b){return b.scrollHeight>b.clientHeight+1}
 function addBlock(node){let b=pageBodies[pageBodies.length-1];b.append(node);if(overflow(b)){node.remove();b=newPage();b.append(node)}return b}
 function paragraph(txt,key=''){
  if(!txt.trim()&&!/^(line|agreement):/.test(key))return;txt=renderText(txt);
- let p=document.createElement('p'),b=pageBodies.at(-1);p.textContent=txt;if(!txt.trim())p.classList.add('empty-paragraph');if(key)setEditable(p,key,true);b.append(p);if(!overflow(b)){decorateParagraph(p,key);return}p.remove();if(!txt.trim()){newPage();pageBodies.at(-1).append(p);decorateParagraph(p,key);return}let rest=txt;
- while(rest){b=pageBodies.at(-1);p=document.createElement('p');b.append(p);let lo=0,hi=rest.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2);p.textContent=rest.slice(0,mid);if(overflow(b))hi=mid-1;else lo=mid}if(!lo){p.remove();newPage();continue}let cut=lo;if(lo<rest.length){let space=rest.lastIndexOf(' ',lo);if(space>lo*.65)cut=space+1}p.textContent=rest.slice(0,cut);if(key)setEditable(p,key,true);rest=rest.slice(cut);if(rest)newPage();else decorateParagraph(p,key)}
+ let p=document.createElement('p'),b=pageBodies.at(-1);standardParagraphText(p,txt);if(!txt.trim())p.classList.add('empty-paragraph');if(key)setEditable(p,key,true);b.append(p);if(!overflow(b)){decorateParagraph(p,key);return}p.remove();if(!txt.trim()){newPage();pageBodies.at(-1).append(p);decorateParagraph(p,key);return}let rest=txt;
+ while(rest){b=pageBodies.at(-1);p=document.createElement('p');b.append(p);let lo=0,hi=rest.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2);p.textContent=rest.slice(0,mid);if(overflow(b))hi=mid-1;else lo=mid}if(!lo){p.remove();newPage();continue}let cut=lo;if(lo<rest.length){let space=rest.lastIndexOf(' ',lo);if(space>lo*.65)cut=space+1}standardParagraphText(p,rest.slice(0,cut));if(rest!==txt)p.style.textIndent='0';if(key)setEditable(p,key,true);rest=rest.slice(cut);if(rest)newPage();else decorateParagraph(p,key)}
 }
 
 function docTable(rows,n,keys=null){
@@ -101,15 +159,16 @@ function renderDocument(){
  let preview=document.querySelector('.preview'),oldStyle=preview.getAttribute('style');if(!preview.offsetWidth)preview.style.cssText='display:block;position:fixed;left:-10000px;top:0;width:850px;max-height:none;visibility:hidden';let prior=$('pages').innerHTML;
  try{
  $('pages').innerHTML='';pageBodies=[];inlineBaseLines=S.sections.map(x=>x.text.split('\n'));inlineBaseAgreement=S.meta.agreement.split('\n');let m=S.meta,b=newPage(true);
- const meta=(k,cls='')=>`<span ${cls?`class="${cls}"`:''} data-edit="meta:${k}">${esc(displayMeta(k))}</span>`;
- b.innerHTML=`<p class="institute" data-edit="meta:institute">${esc(displayMeta('institute'))}</p><p data-edit="meta:department">${esc(displayMeta('department'))}</p><div class="approval">${esc(D('approve'))}\n${esc(D('director'))}\n____________ ${meta('director')}\n${meta('approvalDate')}</div><h1>${esc(D('syllabus'))}</h1><p class="course">${meta('code')} ${meta('course')}</p><p data-edit="meta:program">${esc(displayMeta('program'))}</p><p>${esc(D('cycle'))} ${meta('cycle')}, ${meta('credits')} (${meta('distribution')}) ${esc(D('credits'))}</p><p>${esc(D('yearOfStudy'))} ${meta('studyYear')}, ${esc(D('semester'))} ${meta('semester')}</p><p>${esc(D('academicYear'))} ${meta('year')}</p><p class="city">${meta('city')} ${meta('date')}</p>`;
- b.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));
+ standardCover(b);
  newPage();S.sections.forEach((sec,n)=>{
  let current=pageBodies.at(-1);if(current.lastElementChild&&current.clientHeight-(current.lastElementChild.offsetTop-current.offsetTop+current.lastElementChild.offsetHeight)<80)newPage();let h=document.createElement('h2');h.textContent=sec.title;setEditable(h,`title:${n}`);addBlock(h);
- if(n===0){let q=document.createElement('p');q.innerHTML=`1.1 ${esc(D('lecturer'))}: ${meta('lecturer')}`;addBlock(q);q.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));q=document.createElement('p');q.innerHTML=`1.2 ${esc(D('practice'))}: ${meta('practice')}`;addBlock(q);q.querySelectorAll('[data-edit]').forEach(el=>setEditable(el,el.dataset.edit));docTable([[D('office'),D('hours'),D('email'),D('phone')],[displayMeta('office'),displayMeta('officeHours'),m.email,m.phone]],-1,[[],['meta:office','meta:officeHours','meta:email','meta:phone']])}
- sec.text.split('\n').forEach((txt,i)=>paragraph(txt,`line:${n}:${i}`));if(S.tables[n])docTable(S.tables[n],n);
+ if(n===0)standardTeachers();
+ else if(!standardTableOnly.has(n))sec.text.split('\n').forEach((txt,i)=>{if(n!==10||!isFormula(txt)&&!isSupplement(txt))paragraph(txt,`line:${n}:${i}`)});
+ if(S.tables[n]){if(n===8)standardScores();else docTable(S.tables[n],n)}
+ if(n===10)sec.text.split('\n').forEach((txt,i)=>{if(isFormula(txt)){paragraph(txt,`line:${n}:${i}`);pageBodies.at(-1).lastElementChild?.classList.add('formula')}});
+
  });
- paragraph(D('approvedMeeting'));paragraph(displayMeta('protocol'),'meta:protocol');docTable([[D('position'),D('signature')],[D('head'),displayMeta('head')],[D('author'),displayMeta('author')]],-1,[[],['','meta:head'],['','meta:author']]);paragraph(D('agreed'));m.agreement.split('\n').forEach((x,i)=>paragraph(x,`agreement:${i}`));
+ standardSignatures();standardPrintStyle();
  $('pageCount').textContent=pageBodies.length+' '+T('pages')+' · A4';if(S.active===15)checks();
  }catch(e){$('pages').innerHTML=prior;toast('Құжатты құру қатесі: '+e.message)}finally{if(oldStyle===null)preview.removeAttribute('style');else preview.setAttribute('style',oldStyle);scalePages()}
 }
@@ -228,7 +287,7 @@ function updateIndicators(){const rows=S.tables[S.active-1];if(rows)document.que
 nav=function(){const names=[T('cover'),...ui[interfaceLanguage].sections,T('catalog'),T('settings')];$('nav').innerHTML=names.map((name,i)=>i===14&&!isAdmin()?'':`<button class="nav ${S.active===i?'active':''}" data-section="${i}" ${S.active===i?'aria-current="step"':''}><i>${String(i).padStart(2,'0')}</i><span>${esc(name)}</span><b class="section-status ${completion(i)?'done':'pending'}" title="${esc(T(completion(i)?'completeLabel':'incompleteLabel'))}"></b></button>`).join('')+(isAdmin()?`<button class="nav special" id="manageUsers">⚙ ${esc(T('users'))}</button>`:'');$('nav').querySelectorAll('[data-section]').forEach(b=>b.onclick=()=>goSection(+b.dataset.section));if($('manageUsers'))$('manageUsers').onclick=showUsers};
 function goSection(n){clearTimeout(inlineBlurTimer);S.active=n;renderEditor();nav();requestAnimationFrame(()=>scrollSection(n));}
 function scrollSection(n){const el=document.querySelector(`[data-doc-section="${n}"]`);if(!el)return;const preview=document.querySelector('.preview');if(getComputedStyle(preview).display==='none'){togglePreview()}requestAnimationFrame(()=>{const rect=el.getBoundingClientRect(),p=preview.getBoundingClientRect();preview.scrollTo({top:preview.scrollTop+rect.top-p.top-70,behavior:'smooth'})})}
-const v2Doc=renderDocument;renderDocument=function(){calculate();syncMeta();const preview=document.querySelector('.preview'),top=preview.scrollTop;v2Doc();document.querySelector('.sheet')?.setAttribute('data-doc-section','0');document.querySelectorAll('.sheet h2').forEach(el=>{const n=S.sections.findIndex(s=>s.title===el.textContent);if(n>=0)el.dataset.docSection=String(n+1)});document.querySelectorAll('.sheet table').forEach(table=>{const first=table.querySelector('[data-edit^="table:8:"]');if(first){table.classList.add('assessment');table.querySelectorAll('tr').forEach(tr=>tr.lastElementChild?.classList.add('sumcell'))}});preview.scrollTop=top;updateIndicators()};
+const v2Doc=renderDocument;renderDocument=function(){calculate();syncMeta();const preview=document.querySelector('.preview'),top=preview.scrollTop;v2Doc();document.querySelector('.sheet')?.setAttribute('data-doc-section','0');document.querySelectorAll('.sheet h2').forEach(el=>{const n=S.sections.findIndex(s=>s.title===el.textContent);if(n>=0)el.dataset.docSection=String(n+1)});document.querySelectorAll('.sheet table').forEach(table=>{const first=table.querySelector('[data-edit^="table:8:"]');if(first&&!table.classList.contains('score-matrix')){table.classList.add('assessment');table.querySelectorAll('tr').forEach(tr=>tr.lastElementChild?.classList.add('sumcell'))}});preview.scrollTop=top;updateIndicators()};
 function openCalendar(k){if(!canEdit('meta:'+k))return;dateKey=k;calendarReturn=document.activeElement;let iso=S.meta[k]||`${S.meta.date}-01-01`;calendarYear=+iso.slice(0,4);calendarMonth=+iso.slice(5,7)-1;renderCalendar();$('dateDialog').showModal()}
 function renderCalendar(){const months=interfaceLanguage==='kk'?['Қаңтар','Ақпан','Наурыз','Сәуір','Мамыр','Маусым','Шілде','Тамыз','Қыркүйек','Қазан','Қараша','Желтоқсан']:interfaceLanguage==='ru'?['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']:['January','February','March','April','May','June','July','August','September','October','November','December'];$('dateTitle').textContent=T(dateKey);$('calendarMonth').innerHTML=months.map((m,i)=>`<option value="${i}" ${i===calendarMonth?'selected':''}>${m}</option>`).join('');$('calendarYear').innerHTML=Array.from({length:81},(_,i)=>`<option ${i+2020===calendarYear?'selected':''}>${i+2020}</option>`).join('');const first=(new Date(calendarYear,calendarMonth,1).getDay()+6)%7,last=new Date(calendarYear,calendarMonth+1,0).getDate(),week=interfaceLanguage==='kk'?['Дс','Сс','Ср','Бс','Жм','Сб','Жс']:interfaceLanguage==='ru'?['Пн','Вт','Ср','Чт','Пт','Сб','Вс']:['Mo','Tu','We','Th','Fr','Sa','Su'];$('calendarGrid').innerHTML=week.map(x=>`<b>${x}</b>`).join('')+'<span></span>'.repeat(first)+Array.from({length:last},(_,i)=>{const d=`${calendarYear}-${String(calendarMonth+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`;return `<button type="button" class="${d===S.meta[dateKey]?'selected':''}" data-iso="${d}">${i+1}</button>`}).join('');$('calendarGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>chooseDate(b.dataset.iso));$('calendarToday').textContent=T('today');$('calendarClear').textContent=T('clear')}
 function chooseDate(iso){if(iso&&!isISO(iso))return;S.meta[dateKey]=iso;if(dateKey==='approvalDate'&&iso)S.meta.date=iso.slice(0,4);syncMeta();$('dateDialog').close();changed();renderEditor();calendarReturn?.focus()}
@@ -250,7 +309,7 @@ function profile(){if(!currentUser)return;$('profileName').textContent=currentUs
 $('passwordForm').onsubmit=async e=>{e.preventDefault();try{if(dirty){await saveProjectNow();if(dirty)throw Error('Алдымен өзгерістерді сақтаңыз / Сначала сохраните изменения')}await api('/api/password',{method:'POST',body:JSON.stringify({old:$('oldPassword').value,password:$('newPassword').value})});$('oldPassword').value='';$('newPassword').value='';currentUser=null;$('profileDialog').close();document.body.classList.remove('authenticated');$('loginScreen').hidden=false;$('loginMessage').textContent='Құпиясөз өзгертілді. Қайта кіріңіз. / Пароль изменён. Войдите заново.'}catch(err){$('profileMessage').textContent=err.message}};
 const v2All=renderAll;renderAll=function(){if(!currentUser)return;v2All();$('accountButton').textContent=currentUser.username+' · '+currentUser.role;$('persistBtn').textContent=T('saveLocal');$('offlineHint').textContent=T('offline');$('editHint').textContent=T('editHint')+' · 🔒 '+T('locked');if(!isAdmin())document.querySelectorAll('.project-download').forEach(x=>x.remove());markStatus(dirty?T('unsaved'):T('savedServer'));};
 const v2ExportWord=exportWord;exportWord=function(){if(!currentUser)return;calculate();syncMeta();const copy=structuredClone(S);copy.sections.forEach(s=>s.text=renderText(s.text));download(makeDocx(copy),(S.meta.code||'syllabus')+'-syllabus.docx')};
-saveHTML=function(){if(!currentUser)return;renderDocument();const box=$('pages').cloneNode(true);box.querySelectorAll('.paragraph-actions').forEach(el=>el.remove());box.querySelectorAll('[data-placeholder]').forEach(el=>el.removeAttribute('data-placeholder'));box.querySelectorAll('.inline-score').forEach(el=>el.replaceWith(document.createTextNode(el.value)));box.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));box.querySelectorAll('[data-edit]').forEach(el=>{el.removeAttribute('data-edit');el.removeAttribute('data-choice');el.removeAttribute('data-number');el.removeAttribute('tabindex');el.removeAttribute('role')});box.querySelectorAll('.sheet-wrap').forEach(x=>{x.style.width='210mm';x.style.height='297mm';x.firstChild.style.transform='none'});const css=document.querySelector('style').textContent;download(new Blob(['<!doctype html><html lang="'+S.lang+'"><meta charset="utf-8"><title>Satbayev · Силлабус</title><style>'+css+'body{padding:20px}.sheet-wrap{margin:0 auto 25px}@media print{body{padding:0}}</style><body>'+box.innerHTML+'</body></html>'],{type:'text/html;charset=utf-8'}),(S.meta.code||'syllabus')+'-snapshot.html')};
+saveHTML=function(){if(!currentUser)return;renderDocument();const box=$('pages').cloneNode(true);box.querySelectorAll('.paragraph-actions').forEach(el=>el.remove());box.querySelectorAll('[data-placeholder]').forEach(el=>el.removeAttribute('data-placeholder'));box.querySelectorAll('.inline-score').forEach(el=>el.replaceWith(document.createTextNode(el.value)));box.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));box.querySelectorAll('[data-edit]').forEach(el=>{el.removeAttribute('data-edit');el.removeAttribute('data-choice');el.removeAttribute('data-number');el.removeAttribute('tabindex');el.removeAttribute('role')});box.querySelectorAll('.sheet-wrap').forEach(x=>{x.style.width='210mm';x.style.height='297mm';x.firstChild.style.transform='none'});const css=Array.from(document.querySelectorAll('style')).map(s=>s.textContent).join('\n');download(new Blob(['<!doctype html><html lang="'+S.lang+'"><meta charset="utf-8"><title>Satbayev · Силлабус</title><style>'+css+'body{padding:20px}.sheet-wrap{margin:0 auto 25px}@media print{body{padding:0}}</style><body>'+box.innerHTML+'</body></html>'],{type:'text/html;charset=utf-8'}),(S.meta.code||'syllabus')+'-snapshot.html')};
 downloadProject=async function(){if(!isAdmin())return;try{const r=await fetch('/api/admin/project',{credentials:'same-origin'});if(!r.ok)throw Error('Проект қолжетімсіз / Проект недоступен');download(await r.blob(),'Satbayev-Syllabus-Project.zip')}catch(e){toast(e.message)}};
 resetProject=function(){toast(T('adminOnly'))};
 $('importer').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const v=JSON.parse(await f.text());if(!valid(v)||![3,4].includes(v.schemaVersion))throw Error(T('invalid'));if(!isAdmin()){for(const k of ['catalog','programDirectory','relations','courses','format'])v[k]=structuredClone(S[k]);v.meta.university=FIXED_UNIVERSITY;v.meta.agreement=S.meta.agreement;for(const n of [11,12])v.sections[n]=structuredClone(S.sections[n]);for(const n of [9,10])v.tables[n]=structuredClone(S.tables[n])}for(let n=0;n<13;n++)v.sections[n].title=LANG_DATA.packs[v.lang].sections[n].title;S=v;syncMeta();calculate();renderAll();persist()}catch(err){toast(err.message)}e.target.value=''};
@@ -574,7 +633,7 @@ function makeDocx(state){
   for(const c of Array.from(p.children))if(c!==pr)c.remove();
   const run=make('r');run.append(rp);String(text??'').split('\n').forEach((line,i)=>{if(i)run.append(make('br'));const t=make('t');t.setAttribute('xml:space','preserve');t.textContent=line;run.append(t)});p.append(run);return p;
  }
- function paragraph(text,options={},prototype=67){const p=templates[prototype].cloneNode(true);setText(p,text,{size:14,bold:false,...options});const pr=first(p,'pPr');prop(pr,'spacing',{before:prototype===46&&!options.breakBefore?160:0,after:prototype===46?100:0,beforeAutospacing:0,afterAutospacing:0,line:240,lineRule:'auto'});return p}
+ function paragraph(text,options={},prototype=67){const p=templates[prototype].cloneNode(true);setText(p,text,{size:14,bold:false,...options});const pr=first(p,'pPr');prop(pr,'spacing',{before:prototype===46&&!options.breakBefore?160:0,after:prototype===46?100:0,beforeAutospacing:0,afterAutospacing:0,line:240,lineRule:'auto'});const lead=String(text).match(/^(Мақсаты:|Міндеті:|Цель:|Задачи:|Objective:)/);if(lead&&!options.bold){const run=children(p,'r')[0],label=run.cloneNode(true);label.getElementsByTagNameNS(W,'t')[0].textContent=lead[0];prop(first(label,'rPr'),'b',{val:'1'});run.getElementsByTagNameNS(W,'t')[0].textContent=String(text).slice(lead[0].length);p.insertBefore(label,run)}return p}
  const sect=first(body,'sectPr');const add=el=>body.insertBefore(el,sect);
  const values={institute:m.institute,department:lang==='kk'?m.department+(m.department.endsWith(words.department)?'':' '+words.department):words.department+' '+m.department,approve:L.approve,directorTitle:m.directorTitle||L.director,director:'____________ '+m.director,approvalDate:m.approvalDate?m.approvalDate.split('-').reverse().join('.'):'«___» ___________ '+m.date+L.yearSuffix,syllabus:L.syllabus,course:m.code+' '+m.course,program:m.program,credits:L.cycle+' '+m.cycle+', '+m.credits+' ('+m.distribution+') '+L.credits,term:lang==='kk'?m.studyYear+' '+L.yearOfStudy+', '+m.semester+' '+L.semester:L.yearOfStudy+' '+m.studyYear+', '+L.semester+' '+m.semester,year:lang==='kk'?m.year+' '+L.academicYear:L.academicYear+' '+m.year,city:m.city+' '+m.date};
  for(const t of Array.from(body.getElementsByTagNameNS(W,'t'))){const match=t.textContent.match(/^\{\{(\w+)\}\}$/);if(match)t.textContent=values[match[1]]||''}
@@ -656,18 +715,112 @@ function makeDocx(state){
 
 // New fields are optional strings, compatible with existing personal workspaces.
 const templateWords={
- kk:{practiceOffice:'Практика оқытушысының кеңсесі',practiceHours:'Практика оқытушысының офис-сағаты',practiceEmail:'Практика оқытушысының e-mail',studyMode:'Оқу түрі',directorTitle:'Бекітушінің лауазымы',standardExport:'Word экспорты Үлгі.docx университет үлгісімен жасалады. Негізгі мәтін: Times New Roman 14. Өрістер мен кестелердің пішімі үлгі бойынша бекітілген.',supplementaryNote:'Қосымша жазбалар. Университеттің стандартты Word экспортына бұл бөлімнің тек кестесі кіреді; жазбалар жоба ішінде сақталады.',teacherNote:'Word экспортына оқытушылардың жеке байланыстары мен оқу түрі кіреді. Төмендегі қосымша түсіндірмелер жоба ішінде сақталады.'},
- ru:{practiceOffice:'Кабинет преподавателя практики',practiceHours:'Часы консультаций преподавателя практики',practiceEmail:'E-mail преподавателя практики',studyMode:'Форма обучения',directorTitle:'Должность утверждающего',standardExport:'Экспорт Word оформляется по университетскому образцу Үлгі.docx. Основной текст: Times New Roman 14. Поля и оформление таблиц закреплены по образцу.',supplementaryNote:'Дополнительные заметки. В стандартный экспорт Word входит только таблица этого раздела; заметки сохраняются в проекте.',teacherNote:'В Word экспортируются отдельные контакты преподавателей и форма обучения. Дополнительные пояснения ниже сохраняются в проекте.'},
- en:{practiceOffice:'Practice instructor office',practiceHours:'Practice instructor office hours',practiceEmail:'Practice instructor email',studyMode:'Mode of study',directorTitle:'Approving officer title',standardExport:'Word export follows the university Үлгі.docx template. Body text: Times New Roman 14. Page geometry and table formatting follow the reference.',supplementaryNote:'Supplementary notes. Only this section’s table appears in the standard Word export; notes remain saved in the project.',teacherNote:'Word export includes separate instructor contacts and mode of study. Supplementary notes below remain saved in the project.'}
+ kk:{practiceOffice:'Практика оқытушысының кеңсесі',practiceHours:'Практика оқытушысының офис-сағаты',practiceEmail:'Практика оқытушысының e-mail',studyMode:'Оқу түрі',directorTitle:'Бекітушінің лауазымы',standardExport:'Құжаттың көрінісі, HTML және Word/PDF экспорты Үлгі.docx университет үлгісімен жасалады. Негізгі мәтін: Times New Roman 14. Өрістер мен кестелердің пішімі үлгі бойынша бекітілген.',supplementaryNote:'Қосымша жазбалар. Құжат көрінісі мен экспортқа бұл бөлімнің тек кестесі кіреді; жазбалар жоба ішінде сақталады.',teacherNote:'Құжаттың көрінісі, HTML және Word/PDF экспортына оқытушылардың жеке байланыстары мен оқу түрі кіреді. Төмендегі қосымша түсіндірмелер жоба ішінде сақталады.'},
+ ru:{practiceOffice:'Кабинет преподавателя практики',practiceHours:'Часы консультаций преподавателя практики',practiceEmail:'E-mail преподавателя практики',studyMode:'Форма обучения',directorTitle:'Должность утверждающего',standardExport:'Документ в редакторе и экспорт HTML, Word и PDF оформляются по университетскому образцу Үлгі.docx. Основной текст: Times New Roman 14. Поля и оформление таблиц закреплены по образцу.',supplementaryNote:'Дополнительные заметки. В стандартный экспорт входит только таблица этого раздела; заметки сохраняются в проекте.',teacherNote:'В документ входят отдельные контакты преподавателей и форма обучения. Дополнительные пояснения ниже сохраняются в проекте.'},
+ en:{practiceOffice:'Practice instructor office',practiceHours:'Practice instructor office hours',practiceEmail:'Practice instructor email',studyMode:'Mode of study',directorTitle:'Approving officer title',standardExport:'Document preview and HTML, Word and PDF exports follow the university Үлгі.docx template. Body text: Times New Roman 14. Page geometry and table formatting follow the reference.',supplementaryNote:'Supplementary notes. Only this section’s table appears in the document preview and exports; notes remain saved in the project.',teacherNote:'The document includes separate instructor contacts and mode of study. Supplementary notes below remain saved in the project.'}
 };
 for(const lang of ['kk','ru','en'])Object.assign(ui[lang],templateWords[lang]);
 const templateEditor=renderEditor;renderEditor=function(){
  templateEditor();if(!currentUser)return;
- if(S.active===0||S.active===1){const box=document.createElement('div');box.className='grid2';box.innerHTML=(S.active===0?['directorTitle']:['practiceOffice','practiceHours','practiceEmail','studyMode']).map(field).join('');$('editor').append(box);bindMeta()}
+ if(S.active===0||S.active===1){const box=document.createElement('div');box.className='grid2';box.innerHTML=(S.active===0?['directorTitle']:['practiceOffice','practiceHours','practiceEmail','studyMode']).map(field).join('');const text=S.active===1&&$('sectext')?.closest('.field');if(text)text.before(box);else $('editor').append(box);bindMeta()}
  if([1,2,6,7,8,9,10].includes(S.active)){const note=document.createElement('p');note.className='note';note.textContent=T(S.active===1?'teacherNote':'supplementaryNote');$('sectext')?.closest('.field')?.prepend(note)}
- if(S.active===15){const note=document.createElement('p');note.className='note';note.textContent=T('standardExport');$('editor').prepend(note)}
+ if(S.active===15){const note=document.createElement('p');note.className='note';note.textContent=T('standardExport');$('editor').prepend(note);for(const[k,v]of Object.entries({font:14,line:1,top:7.5,bottom:20,left:30,right:15})){const input=$('fmt-'+k);if(input){input.value=v;input.disabled=true;input.title=T('standardExport')}}}
 };
 const templateRenderAll=renderAll;renderAll=function(){templateRenderAll();$('wordBtn').title=T('standardExport')};
+
+// The editor, downloadable HTML and print/PDF share the approved document layout.
+const standardTableOnly=new Set([1,5,6,7,8,9]);
+const isFormula=line=>/(?:Баға\s*=|Оценка\s*=|Grade\s*=|Жалпы балл|Общий балл|Total score)/i.test(line);
+const isSupplement=line=>/^(?:Примечание|Ескерту|Түсініктеме|Практикада:)/i.test(line);
+function standardMeta(key,value=displayMeta(key)) {return `<span data-edit="meta:${key}">${esc(value||'')}</span>`}
+function standardBind(el){el.querySelectorAll('[data-edit]').forEach(x=>setEditable(x,x.dataset.edit,true))}
+function standardParagraphText(p,text){const match=text.match(/^(Мақсаты:|Міндеті:|Цель:|Задачи:|Objective:)/);if(!match){p.textContent=text;return}const strong=document.createElement('strong');strong.textContent=match[0];p.replaceChildren(strong,document.createTextNode(text.slice(match[0].length)))}
+function standardPrintStyle(){let style=document.getElementById('documentPrintStyle');if(!style){style=document.createElement('style');style.id='documentPrintStyle';document.head.append(style)}const cssText=s=>JSON.stringify(s).replace(/</g,'\\3c ').replace(/>/g,'\\3e ');style.textContent=`@page{@top-center{content:${cssText(displayMeta('university'))};font:10pt 'Times New Roman';text-align:center}@bottom-left{content:${cssText(D('footer'))};font:10pt 'Times New Roman'}}@page:first{@top-center{content:none}}`;}
+function standardSignatures(){
+ const approved=document.createElement('p');approved.innerHTML=esc((S.meta.department?'«'+S.meta.department+'» ':'')+D('approvedMeeting'))+' '+standardMeta('protocol');addBlock(approved);standardBind(approved);
+ const block=document.createElement('div');block.className='signatures';block.innerHTML=`<p>${esc(D('head'))} <span>____________ ${standardMeta('head')}</span></p><p>${esc(D('author'))} <span>____________ ${standardMeta('author')}</span></p>`;addBlock(block);standardBind(block);paragraph(D('agreed'));S.meta.agreement.split('\n').forEach((x,i)=>paragraph(x,`agreement:${i}`));
+}
+newPage=function(isCover=false){
+ const wrap=document.createElement('div');wrap.className='sheet-wrap';const sheet=document.createElement('article');sheet.className='sheet standard-sheet'+(isCover?' cover':'');
+ if(!isCover){const head=document.createElement('div');head.className='dochead';head.textContent=displayMeta('university');setEditable(head,'meta:university');sheet.append(head)}
+ const body=document.createElement('div');body.className='body';sheet.append(body);
+ if(!isCover){const foot=document.createElement('div');foot.className='foot';const label=document.createElement('span'),number=document.createElement('span');label.textContent=D('footer');number.textContent=String(pageBodies.length+1);foot.append(label,number);sheet.append(foot)}
+ wrap.append(sheet);$('pages').append(wrap);body.style.height=(1122.5197-20*3.7795276-body.offsetTop-4)+'px';pageBodies.push(body);return body;
+};
+function standardCover(b){
+ const m=S.meta,meta=standardMeta;const department=S.lang==='kk'&&!m.department.endsWith('кафедрасы')?m.department+' кафедрасы':m.department;
+ b.innerHTML=`<img class="university-logo" alt="Satbayev University" width="458" height="118" src="data:image/png;base64,${EXPORT_TEMPLATE.binary['word/media/image1.png']}"><p class="institute">${meta('institute')}</p><p class="department">${meta('department',department)}</p><div class="approval"><b>${esc(D('approve'))}</b>\n${meta('directorTitle',m.directorTitle||D('director'))}\n____________ ${meta('director')}\n${meta('approvalDate',m.approvalDate?m.approvalDate.split('-').reverse().join('.'):'«___» ___________ '+m.date+D('yearSuffix'))}</div><h1>${esc(D('syllabus'))}</h1><p class="course">${meta('code')} ${meta('course')}</p><p>${meta('program')}</p><p>${esc(D('cycle'))} ${meta('cycle')}, ${meta('credits')} (${meta('distribution')}) ${esc(D('credits'))}</p><p>${meta('studyYear')} ${esc(D('yearOfStudy'))}, ${meta('semester')} ${esc(D('semester'))}</p><p>${meta('year')} ${esc(D('academicYear'))}</p><p class="city">${meta('city')} ${meta('date')}</p>`;standardBind(b);
+}
+function standardTeachers(){
+ const m=S.meta,meta=standardMeta;
+ for(const practice of [false,true]){
+  const block=document.createElement('div');block.className='teacher-block';
+  const who=practice?'practice':'lecturer',office=practice?'practiceOffice':'office',hours=practice?'practiceHours':'officeHours',email=practice?'practiceEmail':'email';
+  const emailValue=practice?(m.practiceEmail??(m.practice===m.lecturer?m.email:'')):m.email;
+  block.innerHTML=`<p><b>${practice?'1.2':'1.1'} ${esc(D(who))}:</b>${practice?'<br>':' '}${meta(who)}</p><div class="teacher-contacts"><div>${S.lang==='kk'?'кеңсе: кабинет ':esc(D('office'))+': '}${meta(office,m[office]??m.office)}</div><div>${S.lang==='kk'?'Офис-сағаты: ':esc(D('hours'))+': '}${meta(hours,m[hours]??m.officeHours)}<br>e-mail: ${meta(email,emailValue)}</div></div>`;
+  addBlock(block);standardBind(block);
+ }
+ const p=document.createElement('p');p.className='study-mode';p.innerHTML=standardMeta('studyMode',m.studyMode||({kk:'Оқу түрі - күндізгі',ru:'Форма обучения — очная',en:'Mode of study — full-time'}[S.lang]));addBlock(p);standardBind(p);
+}
+function standardTable(rows,n,keys=null){
+ const templateIndex={1:2,5:3,6:4,7:5,8:6,9:7,10:8}[n];
+ let table=document.createElement('table');table.className='standard-table table-'+n;
+ if(templateIndex!==undefined){const xml=new DOMParser().parseFromString(EXPORT_TEMPLATE.tables[templateIndex],'application/xml');const widths=Array.from(xml.getElementsByTagNameNS('*','gridCol')).map(x=>Number(x.getAttribute('w:w')));if(n===7)widths.pop();const sum=widths.reduce((a,b)=>a+b,0);const cols=document.createElement('colgroup');widths.forEach(w=>{const c=document.createElement('col');c.style.width=w/sum*100+'%';cols.append(c)});table.append(cols)}
+ const head=table.createTHead(),body=table.createTBody();
+ const fill=(cell,value,key)=>{cell.textContent=value;if(key)setEditable(cell,key,!/^table:\d+:0:/.test(key))};
+ if(n===7){const row=head.insertRow();let c=document.createElement('th');c.rowSpan=2;fill(c,rows[0][0],'table:7:0:0');row.append(c);c=document.createElement('th');c.colSpan=rows[0].length-1;c.textContent={kk:'Құзыреттілік',ru:'Компетенции',en:'Competencies'}[S.lang];row.append(c)}
+ rows.forEach((r,i)=>{const header=i===0&&n!==1, tr=(header?head:body).insertRow();r.forEach((value,j)=>{if(n===7&&i===0&&j===0)return;const c=document.createElement(header?'th':'td');fill(c,value,keys?.[i]?.[j]||(rows===S.tables[n]?`table:${n}:${i}:${j}`:''));tr.append(c)})});
+ standardPlaceTable(table);
+ if(n===9)document.querySelectorAll('.table-9').forEach(part=>{const rs=Array.from(part.tBodies[0].rows);for(let i=0;i<rs.length;){const value=rs[i].cells[4]?.textContent;let end=i+1;while(value&&end<rs.length&&rs[end].cells[4]?.textContent===value)end++;if(end-i>1){rs[i].cells[4].rowSpan=end-i;for(let j=i+1;j<end;j++)rs[j].cells[4].remove()}i=end}});
+}
+function standardPlaceTable(table){
+ let b=pageBodies.at(-1);b.append(table);if(!overflow(b))return;
+ // Keep compact tables intact; large tables repeat their headers on continuation pages.
+ const measuredHeight=table.offsetHeight;table.remove();const emptyHeight=b.clientHeight;
+ if(measuredHeight<emptyHeight){const heading=b.lastElementChild?.tagName==='H2'?b.lastElementChild:null;heading?.remove();b=newPage();if(heading)b.append(heading);b.append(table);if(!overflow(b))return;table.remove()}
+ const rows=Array.from(table.tBodies[0].rows);const original=table;let next=()=>{const t=original.cloneNode(true);t.tBodies[0].replaceChildren();pageBodies.at(-1).append(t);return t};table=next();
+ for(const row of rows){
+  table.tBodies[0].append(row);if(!overflow(pageBodies.at(-1)))continue;
+  if(table.tBodies[0].rows.length>1){row.remove();newPage();table=next();table.tBodies[0].append(row)}
+  if(!overflow(pageBodies.at(-1)))continue;
+  // A single very long user-entered cell may exceed a sheet. Preserve all text
+  // and its edit key across continuations, instead of clipping the remainder.
+  row.remove();const source=Array.from(row.cells),remaining=source.map(c=>c.textContent);let guard=0;
+  while(remaining.some(Boolean)&&guard++<1000){
+   const part=table.tBodies[0].insertRow(),cells=source.map(()=>part.insertCell());let lo=0,hi=Math.max(...remaining.map(s=>s.length));
+   while(lo<hi){const mid=Math.ceil((lo+hi)/2);cells.forEach((c,j)=>c.textContent=remaining[j].slice(0,mid));if(overflow(pageBodies.at(-1)))hi=mid-1;else lo=mid}
+   if(!lo){part.remove();newPage();table=next();continue}
+   cells.forEach((c,j)=>{let cut=Math.min(lo,remaining[j].length);if(cut<remaining[j].length){const space=remaining[j].lastIndexOf(' ',cut);if(space>cut*.65)cut=space+1}c.textContent=remaining[j].slice(0,cut);remaining[j]=remaining[j].slice(cut);if(source[j].dataset.edit)setEditable(c,source[j].dataset.edit,true)});
+   if(remaining.some(Boolean)){newPage();table=next()}
+  }
+ }
+}
+function standardScores(){
+ const rows=S.tables[8],t=document.createElement('table');t.className='standard-table score-matrix';const cols=document.createElement('colgroup');[4.5,18,9.5,...Array(15).fill(3.75),11.75].forEach(w=>{const col=document.createElement('col');col.style.width=w+'%';cols.append(col)});t.append(cols);const head=t.createTHead(),r=head.insertRow();
+ [rows[0][0],rows[0][1],rows[0][2],{kk:'Апта',ru:'Недели',en:'Weeks'}[S.lang],rows[0][19]].forEach((v,i)=>{const c=document.createElement('th');c.textContent=v;if(i===3)c.colSpan=15;else c.rowSpan=2;r.append(c)});const weeks=head.insertRow();for(let i=1;i<=15;i++){const c=document.createElement('th');c.textContent=i;weeks.append(c)}
+ const body=t.createTBody(),regular=[],exam=[];
+ rows.slice(1).forEach((row,i)=>{const weekly=row.slice(3,18).reduce((a,x)=>a+Number(x||0),0);if(weekly||!Number(row[18]))regular.push(i+1);if(Number(row[18]))exam.push(i+1)});
+ for(const [group,indices] of [['weekly',regular],['exam',exam]])indices.forEach((ri,k)=>{const row=rows[ri],tr=body.insertRow();for(let j=0;j<18;j++){const cell=tr.insertCell();cell.textContent=group==='exam'&&j>=3?'':row[j];if(group==='exam'&&j>=3){if(j===3){cell.colSpan=15}else cell.remove()}else setEditable(cell,`table:8:${ri}:${j}`,true)}if(k===0){const c=tr.insertCell();c.rowSpan=indices.length;c.dataset.scoreGroup=group;c.textContent=String(indices.reduce((a,i)=>a+(group==='exam'?Number(rows[i][18]):rows[i].slice(3,18).reduce((s,x)=>s+Number(x||0),0)),0))}});
+ const total=body.insertRow();total.className='standard-total';const label=total.insertCell();label.colSpan=18;label.textContent=D('total');const sum=total.insertCell();sum.dataset.scoreGroup='total';sum.textContent=totalScore();standardPlaceTable(t);
+}
+docTable=standardTable;
+function standardCleanDocument(root){root.querySelectorAll('.paragraph-actions').forEach(x=>x.remove());root.querySelectorAll('.inline-score').forEach(x=>x.replaceWith(document.createTextNode(x.value==='0'?'':x.value)));root.querySelectorAll('[data-edit]').forEach(x=>{for(const a of ['contenteditable','data-choice','data-number','tabindex','role','data-placeholder'])x.removeAttribute(a)});return root}
+function standardPrintClone(root){
+ const clone=standardCleanDocument(root.cloneNode(true));clone.id='printDocument';
+ // Screen pages may repeat headers and split paragraphs. Rejoin them before
+ // handing pagination to the print engine, including in downloaded HTML.
+ for(const n of [1,5,6,7,9,10]){const tables=Array.from(clone.querySelectorAll('.table-'+n));if(tables.length>1){const first=tables.shift();tables.forEach(t=>{first.tBodies[0].append(...Array.from(t.tBodies[0].rows));t.remove()})}}
+ const groups=new Map();clone.querySelectorAll('[data-edit^="line:"],[data-edit^="agreement:"]').forEach(p=>{const key=p.dataset.edit;if(groups.has(key)){const first=groups.get(key);first.append(document.createTextNode(p.textContent));p.remove()}else groups.set(key,p)});
+ const cover=clone.querySelector('.cover'),flow=document.createElement('article');flow.className='sheet standard-sheet print-flow';clone.querySelectorAll('.sheet:not(.cover) .body').forEach(body=>flow.append(...Array.from(body.children)));clone.replaceChildren(cover,flow);
+ return clone;
+}
+window.addEventListener('beforeprint',()=>{document.getElementById('printDocument')?.remove();document.querySelector('.preview').append(standardPrintClone($('pages')))});
+window.addEventListener('afterprint',()=>{document.getElementById('printDocument')?.remove();renderDocument()});
+saveHTML=function(){if(!currentUser)return;clearTimeout(timer);renderDocument();const source=$('pages'),print=standardPrintClone(source),box=standardCleanDocument(source.cloneNode(true));for(const root of [box,print]){root.querySelectorAll('[data-edit]').forEach(x=>{x.removeAttribute('data-edit');x.removeAttribute('data-join')});root.querySelectorAll('[data-placeholder]').forEach(x=>x.removeAttribute('data-placeholder'));root.querySelectorAll('.sheet-wrap').forEach(w=>{w.style.width='210mm';w.style.height='297mm';w.firstChild.style.transform='none'})}const css=Array.from(document.querySelectorAll('style')).map(s=>s.textContent).join('\n');download(new Blob(['<!doctype html><html lang="'+S.lang+'"><meta charset="utf-8"><title>Satbayev · Syllabus</title><style>'+css+'body{padding:20px}.sheet-wrap{margin:0 auto 25px}@media print{body{padding:0}}</style><body>'+box.outerHTML+print.outerHTML+'</body></html>'],{type:'text/html;charset=utf-8'}),(S.meta.code||'syllabus')+'-snapshot.html')};
+const standardRefresh=refreshScoreCells;refreshScoreCells=function(source){standardRefresh(source);document.querySelectorAll('.score-matrix .inline-score').forEach(input=>{if(input!==source&&input.value==='0')input.value=''});document.querySelectorAll('[data-score-group]').forEach(c=>{const kind=c.dataset.scoreGroup;c.textContent=kind==='total'?totalScore():numericString(S.tables[8].slice(1).reduce((a,r)=>a+(kind==='exam'?Number(r[18]||0):r.slice(3,18).reduce((s,x)=>s+Number(x||0),0)),0));c.closest('tr').classList.toggle('over-limit',Number(totalScore())>100)})};
+ui.kk.printNote='PDF: A4, масштаб 100%, өрістер «Әдепкі», браузер колонтитулдары өшірулі болсын.';
+ui.ru.printNote='Для PDF: A4, масштаб 100%, поля «По умолчанию», колонтитулы браузера выключены.';
+ui.en.printNote='PDF: A4, scale 100%, default margins, browser headers and footers off.';
 
 bootstrap();
 

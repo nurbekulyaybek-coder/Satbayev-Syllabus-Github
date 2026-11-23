@@ -30,7 +30,13 @@
     "agreement": "Юбузова Х.И.\nЖумагалиева А.С.",
     "approvalDate": "",
     "protocolDate": "",
-    "protocolNumber": ""
+    "protocolNumber": "",
+    "directorTitle": "",
+    "practiceOffice": "",
+    "practiceHours": "",
+    "practiceEmail": "",
+    "studyMode": "Күндізгі",
+    "examFormat": "Аралас"
   },
   "sections": [
     {
@@ -171,11 +177,11 @@
         "ПЖ №4"
       ],
       [
-        "8",
-        "Бірінші аралық аттестация",
-        "Бірінші аралық аттестация",
-        "Бірінші аралық аттестация",
-        "Бірінші аралық аттестация",
+        "8, 15",
+        "Аралық бақылаулар",
+        "Аралық бақылаулар",
+        "Аралық бақылаулар",
+        "Аралық бақылаулар",
         "8 апта"
       ],
       [
@@ -233,14 +239,6 @@
         "",
         "[3] Тарау 5, [4] Тарау 4",
         "СОӨЖ 1"
-      ],
-      [
-        "15",
-        "Екінші аралық аттестация",
-        "Екінші аралық аттестация",
-        "Екінші аралық аттестация",
-        "Екінші аралық аттестация",
-        "15 апта"
       ],
       [
         "",
@@ -2093,6 +2091,348 @@
       "programs": [
         "6B06301 Ақпараттық қауіпсіздік"
       ]
+    },
+    {
+      "code": "SEC185",
+      "title": "Желілік технологиялар қауіпсіздігі",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "6",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Жүйе және желі қауіпсіздігі модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3601",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "CSE411",
+      "title": "Жүйелер мен желілерді басқару",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "7",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Жүйе және желі қауіпсіздігі модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4702",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC176",
+      "title": "Басып кіруді болдырмау және анықтау жүйелері",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Жүйе және желі қауіпсіздігі модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4803",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC175",
+      "title": "Интернет заттардың қауіпсіздігі",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Жүйе және желі қауіпсіздігі модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4804",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC199",
+      "title": "Криптография математикасы",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "6",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/0/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты криптографиялық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3601",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC168",
+      "title": "Ақпаратты криптографиялық қорғау құралдарын құру",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "7",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты криптографиялық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4702",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC169",
+      "title": "Криптографиялық құралдарды стандарттау және сертификаттау",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/0/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты криптографиялық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4803",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC170",
+      "title": "Ақпаратты қорғаудың криптографиялық жүйелерін жобалау",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "1/1/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты криптографиялық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4804",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC151",
+      "title": "Микропроцессорлық жүйелерді ұйымдастыру",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "6",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "1/1/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты техникалық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3601",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC152",
+      "title": "Микроконтроллерлер",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "7",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/0/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты техникалық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4702",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC142",
+      "title": "Ақпаратты қорғаудың техникалық құралдары мен әдістері",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/0/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты техникалық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4803",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC166",
+      "title": "Ақпаратты қорғау қызметін ұйымдастыру және басқару",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "8",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/0/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "Ақпаратты техникалық қорғау модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4804",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC177",
+      "title": "Блокчейн технологиялары",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "7",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "1/1/1*",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4703",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "CSE550",
+      "title": "Осалдықтарды анықтау және талдау",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "4",
+      "semester": "7",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "2/1/0*",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "4703",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "CSE101",
+      "title": "JAVA EE технологиясы",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "5",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "1/1/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3501",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "CSE551",
+      "title": "Capstone project 1",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "5",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "0/0/3",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3501",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "SEC188",
+      "title": "Қауіпсіз веб-қосымшаларды жобалау",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "6",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "1/1/1",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3602",
+      "source": "РУП 2022-2023"
+    },
+    {
+      "code": "CSE552",
+      "title": "Capstone project 2",
+      "programs": [
+        "6B06301 Ақпараттық қауіпсіздік"
+      ],
+      "program": "6B06301 Ақпараттық қауіпсіздік",
+      "studyYear": "3",
+      "semester": "6",
+      "cycle": "БП, ТК",
+      "credits": "5",
+      "distribution": "0/0/3",
+      "totalHours": "150",
+      "independentHours": "105",
+      "module": "R&D модулі",
+      "sourceYear": "2022-2023",
+      "electiveCode": "3602",
+      "source": "РУП 2022-2023"
     }
   ],
   "documentId": "original-20261016",

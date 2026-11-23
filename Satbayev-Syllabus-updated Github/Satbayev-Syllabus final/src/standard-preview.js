@@ -24,11 +24,9 @@ function standardCover(b){
 function standardTeachers(){
  const m=S.meta,meta=standardMeta;
  for(const practice of [false,true]){
-  const block=document.createElement('div');block.className='teacher-block';
   const who=practice?'practice':'lecturer',office=practice?'practiceOffice':'office',hours=practice?'practiceHours':'officeHours',email=practice?'practiceEmail':'email';
-  const emailValue=practice?(m.practiceEmail??(m.practice===m.lecturer?m.email:'')):m.email;
-  block.innerHTML=`<p><b>${practice?'1.2':'1.1'} ${esc(D(who))}:</b>${practice?'<br>':' '}${meta(who)}</p><div class="teacher-contacts"><div>${S.lang==='kk'?'кеңсе: кабинет ':esc(D('office'))+': '}${meta(office,m[office]??m.office)}</div><div>${S.lang==='kk'?'Офис-сағаты: ':esc(D('hours'))+': '}${meta(hours,m[hours]??m.officeHours)}<br>e-mail: ${meta(email,emailValue)}</div></div>`;
-  addBlock(block);standardBind(block);
+  const names=String(m[who]||'').split(/\\n+/).map(x=>x.trim()).filter(Boolean),offices=String(m[office]??(practice?m.office:'')).split(/\\n+/),times=String(m[hours]??(practice?m.officeHours:'')).split(/\\n+/),emails=String(m[email]??(practice?(m.practice===m.lecturer?m.email:''):m.email)).split(/\\n+/);
+  names.forEach((name,i)=>{const block=document.createElement('div');block.className='teacher-block';const suffix=names.length>1?' '+(i+1):'';block.innerHTML='<p><b>'+(practice?'1.2':'1.1')+suffix+' '+esc(D(who))+':</b>'+(practice?'<br>':' ')+meta(who,name)+'</p><div class="teacher-contacts"><div>'+(S.lang==='kk'?'кеңсе: кабинет ':esc(D('office'))+': ')+meta(office,(offices[i]||offices[0]||'').trim())+'</div><div>'+(S.lang==='kk'?'Офис-сағаты: ':esc(D('hours'))+': ')+meta(hours,(times[i]||times[0]||'').trim())+'<br>e-mail: '+meta(email,(emails[i]||emails[0]||'').trim())+'</div></div>';addBlock(block);standardBind(block)})
  }
  const p=document.createElement('p');p.className='study-mode';p.innerHTML=standardMeta('studyMode',m.studyMode||({kk:'Оқу түрі - күндізгі',ru:'Форма обучения — очная',en:'Mode of study — full-time'}[S.lang]));addBlock(p);standardBind(p);
 }
@@ -37,7 +35,7 @@ function standardTable(rows,n,keys=null){
  let table=document.createElement('table');table.className='standard-table table-'+n;
  if(templateIndex!==undefined){const xml=new DOMParser().parseFromString(EXPORT_TEMPLATE.tables[templateIndex],'application/xml');const widths=Array.from(xml.getElementsByTagNameNS('*','gridCol')).map(x=>Number(x.getAttribute('w:w')));if(n===7)widths.pop();const sum=widths.reduce((a,b)=>a+b,0);const cols=document.createElement('colgroup');widths.forEach(w=>{const c=document.createElement('col');c.style.width=w/sum*100+'%';cols.append(c)});table.append(cols)}
  const head=table.createTHead(),body=table.createTBody();
- const fill=(cell,value,key)=>{cell.textContent=value;if(key)setEditable(cell,key,!/^table:\d+:0:/.test(key))};
+ const fill=(cell,value,key)=>{cell.textContent=value;if(n===5&&(/аралық аттеста|аралық бақылау|interim assessment|interim assessments|промежуточн.*аттестаци|қорытынды емтихан|итоговый экзамен|final examination/i.test(value)))cell.style.fontWeight='bold';if(key)setEditable(cell,key,!/^table:\d+:0:/.test(key))};
  if(n===7){const row=head.insertRow();let c=document.createElement('th');c.rowSpan=2;fill(c,rows[0][0],'table:7:0:0');row.append(c);c=document.createElement('th');c.colSpan=rows[0].length-1;c.textContent={kk:'Құзыреттілік',ru:'Компетенции',en:'Competencies'}[S.lang];row.append(c)}
  rows.forEach((r,i)=>{const header=i===0&&n!==1, tr=(header?head:body).insertRow();r.forEach((value,j)=>{if(n===7&&i===0&&j===0)return;const c=document.createElement(header?'th':'td');fill(c,value,keys?.[i]?.[j]||(rows===S.tables[n]?`table:${n}:${i}:${j}`:''));tr.append(c)})});
  standardPlaceTable(table);

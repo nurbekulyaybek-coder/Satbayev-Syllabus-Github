@@ -29,6 +29,37 @@ def initialize():
    for username,name,role,password in [('admin','Әкімші','admin',os.environ.get('SYLLABUS_ADMIN_PASSWORD','SatbayevAdmin#2026')),('user','Оқытушы','user',os.environ.get('SYLLABUS_USER_PASSWORD','Teacher#2026'))]:
     uid=con.execute('INSERT INTO users(username,name,role) VALUES(?,?,?)',(username,name,role)).lastrowid;set_password(con,uid,password)
   con.execute('INSERT OR IGNORE INTO config(id,state) VALUES(1,?)',(json.dumps(SEED,ensure_ascii=False),))
+  cfgrow=con.execute('SELECT state,version FROM config WHERE id=1').fetchone();cfg=json.loads(cfgrow['state']);changed_cfg=False
+  for key in ['catalog','programDirectory','relations','courses']:
+   target=cfg.setdefault(key,[])
+   for item in SEED.get(key,[]):
+    if key=='courses':
+     match=next((x for x in target if x.get('code')==item.get('code') and x.get('title')==item.get('title') and x.get('sourceYear')==item.get('sourceYear')),None)
+     if match is None:target.append(copy.deepcopy(item));changed_cfg=True
+     else:
+      for k,v in item.items():
+       if match.get(k) in (None,'',[]):match[k]=copy.deepcopy(v);changed_cfg=True
+    elif key=='catalog':
+     match=next((x for x in target if x.get('name')==item.get('name')),None)
+     if match is None:target.append(copy.deepcopy(item));changed_cfg=True
+     else:
+      for dep in item.get('departments',[]):
+       if dep not in match.setdefault('departments',[]):match['departments'].append(dep);changed_cfg=True
+      for program in item.get('programs',[]):
+       if program not in match.setdefault('programs',[]):match['programs'].append(program);changed_cfg=True
+    elif key=='programDirectory':
+     if not any(x.get('title')==item.get('title') for x in target):target.append(copy.deepcopy(item));changed_cfg=True
+    else:
+     match=next((x for x in target if x.get('name')==item.get('name')),None)
+     if match is None:target.append(copy.deepcopy(item));changed_cfg=True
+     else:
+      for dep in item.get('departments',[]):
+       found=next((d for d in match.setdefault('departments',[]) if d.get('name')==dep.get('name')),None)
+       if found is None:match['departments'].append(copy.deepcopy(dep));changed_cfg=True
+       else:
+        for program in dep.get('programs',[]):
+         if program not in found.setdefault('programs',[]):found['programs'].append(program);changed_cfg=True
+  if changed_cfg:con.execute('UPDATE config SET state=?,version=version+1 WHERE id=1',(json.dumps(cfg,ensure_ascii=False),))
   workspace_store.initialize(con)
  try:os.chmod(DB,0o600)
  except OSError:pass
@@ -50,6 +81,8 @@ def normalize(state):
 
 def overlay(doc,cfg):
  state=copy.deepcopy(doc)
+ state.setdefault('meta',{})
+ for k,v in SEED['meta'].items():state['meta'].setdefault(k,copy.deepcopy(v))
  for k in CONFIG_KEYS:state[k]=copy.deepcopy(cfg[k])
  state['meta']['agreement']=cfg['meta']['agreement']
  for n in LOCKED_SECTIONS:state['sections'][n]=copy.deepcopy(cfg['sections'][n])

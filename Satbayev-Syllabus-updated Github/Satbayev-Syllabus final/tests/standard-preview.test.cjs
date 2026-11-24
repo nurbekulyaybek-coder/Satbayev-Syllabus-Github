@@ -1,15 +1,15 @@
 const {JSDOM,VirtualConsole}=require('jsdom'),fs=require('fs'),path=require('path'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),state=JSON.parse(fs.readFileSync(root+'/data/initial-state.json'));
-state.meta.practice='Practice instructor';state.meta.practiceEmail='practice@example.test';state.meta.email='lecturer@example.test';
+state.meta.lecturer='Lecturer One\nLecturer Two';state.meta.office='101\n202';state.meta.officeHours='Monday\nTuesday';state.meta.email='one@example.test\ntwo@example.test';state.meta.practice='Practice instructor';state.meta.practiceEmail='practice@example.test';state.meta.studyMode='Күндізгі';state.meta.approvalDate='2026-01-09';state.meta.protocolDate='2026-11-11';state.meta.protocolNumber='№8';state.tables[8][1][2]='2 2';
 const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
 const dom=new JSDOM(fs.readFileSync(root+'/index.html','utf8'),{url:'http://localhost:8920',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,beforeParse(w){w.structuredClone=structuredClone;w.Blob=Blob;w.TextEncoder=TextEncoder;w.fetch=async p=>({ok:true,json:async()=>p==='/api/me'?{user:{role:'admin',username:'test',csrf:'test'}}:p==='/api/workspace'?{workspace:{activeId:'qa',documents:[{id:'qa',name:'QA',state,versions:[]}]},revision:0}:{configured:false}});w.HTMLElement.prototype.scrollTo=function(){};}});
 (async()=>{await new Promise(r=>setTimeout(r,350));const w=dom.window,d=w.document;
  assert(d.querySelector('.cover img.university-logo').src.startsWith('data:image/png;base64,'));
  assert(!d.querySelector('.cover .dochead'));assert(!d.querySelector('.cover .foot'));
- assert.equal(d.querySelectorAll('.teacher-block').length,2);
+ assert.equal(d.querySelectorAll('.teacher-block').length,3);assert.equal(d.querySelectorAll('.teacher-block')[0].querySelector('[data-edit=\"meta:lecturer\"]').textContent,'Lecturer One');assert.equal(d.querySelectorAll('.teacher-block')[1].querySelector('[data-edit=\"meta:lecturer\"]').textContent,'Lecturer Two');assert(d.querySelector('.study-mode').textContent.includes('Оқу түрі: Күндізгі'));assert(d.querySelector('.cover .approval-meeting').textContent.includes('№ 8'));assert(d.querySelector('.cover .approval-meeting').textContent.includes('11.11.2026'));assert.equal(d.querySelector('.score-matrix tbody tr:first-child td:nth-child(3)').textContent,'2/2');
  assert(d.querySelector('.teacher-block:first-of-type [data-edit="meta:email"]'));
  assert.equal(d.querySelector('[data-edit="meta:practiceEmail"]').textContent,'practice@example.test');
- assert(!d.querySelector('#pages [data-edit="meta:phone"]'));
+ assert(!d.querySelector('#pages [data-edit="meta:phone"]'));const firstOutcomeLines=[...d.querySelectorAll('[data-edit^="line:4:"]')].filter(x=>x.style.fontWeight==='bold');assert.equal(firstOutcomeLines.length,3);
  assert.equal(d.querySelector('.table-1 thead').children.length,0,'prerequisites have no bold header');
  assert.equal(d.querySelectorAll('.score-matrix col').length,19);
  assert.equal(d.querySelector('[data-score-group="total"]').textContent,'100');

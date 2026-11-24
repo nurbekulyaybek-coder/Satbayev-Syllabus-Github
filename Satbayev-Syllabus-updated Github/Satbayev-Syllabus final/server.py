@@ -73,7 +73,7 @@ def normalize(state):
  m=state['meta'];m['university']=UNIVERSITY
  inst,dep=selected(state);m['director']=inst.get('director','') if inst else '';m['head']=dep.get('head','') if dep else ''
  if m.get('approvalDate'):m['date']=m['approvalDate'][:4]
- pd=m.get('protocolDate','');m['protocol']='№ '+(m.get('protocolNumber') or '___')+', '+('«'+pd[8:10]+'» '+pd[5:7]+'.'+pd[:4]+' ж.' if pd else '«___» __________ '+m['date']+' ж.')
+ pd=m.get('protocolDate','');m['protocol']='№ '+str(m.get('protocolNumber') or '___').strip().removeprefix('№').strip()+', '+('«'+pd[8:10]+'» '+pd[5:7]+'.'+pd[:4]+' ж.' if pd else '«___» __________ '+m['date']+' ж.')
  for i,row in enumerate(state['tables']['8'][1:],1):
   row[0]=str(i)
   total=sum((Decimal(x.replace(',','.')) for x in row[3:-1]),Decimal(0));row[-1]=str(int(total)) if total==int(total) else format(total.normalize(),'f')

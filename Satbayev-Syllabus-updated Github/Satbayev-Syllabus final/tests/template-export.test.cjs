@@ -7,7 +7,7 @@ function unzipStore(bytes){const files={};let p=0;while(bytes.readUInt32LE(p)===
 (async()=>{
  const state=JSON.parse(fs.readFileSync(process.argv[2]||root+'/data/initial-state.json','utf8'));const original=JSON.stringify(state);
  const bytes=Buffer.from(await ctx.makeDocx(state).arrayBuffer()),files=unzipStore(bytes),xml=files['word/document.xml'].toString();
- const doc=new window.DOMParser().parseFromString(xml,'application/xml');assert(!doc.querySelector('parsererror'));
+ const doc=new window.DOMParser().parseFromString(xml,'application/xml');assert(!doc.querySelector('parsererror'));const outcomeLines=state.sections[4].text.split(/\r?\n/),outcomeHeadings=/^(Білуі керек|Істей алуы керек|Дағдыларды меңгеру|Знать|Уметь|Владеть|Knowledge|Skills|Ability to)\s*:/i,outcomeTargets=outcomeLines.map((line,i)=>outcomeHeadings.test(line.trim())?outcomeLines.findIndex((x,j)=>j>i&&x.trim()):-1).filter(i=>i>=0).map(i=>outcomeLines[i].trim());for(const target of outcomeTargets){const para=[...doc.getElementsByTagName('w:p')].find(p=>p.textContent.trim()===target);assert(para,'designated learning outcome exists');assert.equal(para.getElementsByTagName('w:b')[0]?.getAttribute('w:val'),'1','designated learning outcome is bold')}
  assert(xml.includes('w:w="11906"'));assert(xml.includes('w:left="1701"'));assert(xml.includes('w:titlePg'));
  assert(xml.includes('w:sz w:val="28"'));assert(xml.includes('w:tblHeader'));assert(xml.includes('w:gridSpan'));assert(!xml.includes('{{'));
  assert.equal(JSON.stringify(state),original,'export does not mutate user data');
@@ -17,9 +17,9 @@ function unzipStore(bytes){const files={};let p=0;while(bytes.readUInt32LE(p)===
  const score=tables[6];assert.equal(score.getElementsByTagName('w:gridCol').length,19,'standard nineteen-column matrix');
  const out=process.argv[3]||root+'/tests/template-export.docx';fs.writeFileSync(out,bytes);
  // Custom teacher contacts and input escaping must survive independently.
- state.meta.practiceEmail='practice@example.test';state.meta.email='lecture@example.test';state.meta.course='A < B & C';state.sections[2].text='First\n\nLast';
+ state.meta.practiceEmail='practice@example.test';state.meta.email='lecture-one@example.test\nlecture-two@example.test';state.meta.lecturer='Lecturer One\nLecturer Two';state.meta.office='101\n202';state.meta.course='A < B & C';state.meta.protocolDate='2026-11-11';state.meta.protocolNumber='№8';state.tables[8][1][2]='2 2';state.sections[2].text='First\n\nLast';
  const custom=unzipStore(Buffer.from(await ctx.makeDocx(state).arrayBuffer()))['word/document.xml'].toString();
- assert(custom.includes('practice@example.test'));assert(custom.includes('lecture@example.test'));assert(custom.includes('A &lt; B &amp; C'));
+ assert(custom.includes('practice@example.test'));assert(custom.includes('lecture-one@example.test'));assert(custom.includes('lecture-two@example.test'));assert(custom.includes('Lecturer One'));assert(custom.includes('Lecturer Two'));assert(custom.includes('11.11.2026'));assert(custom.includes('№ 8'));assert(custom.includes('2/2'));assert(custom.includes('A &lt; B &amp; C'));
  const parsed=new window.DOMParser().parseFromString(custom,'application/xml');const ps=[...parsed.getElementsByTagName('w:p')].map(p=>p.textContent);let at=ps.indexOf('First');assert.equal(ps[at+1],'');assert.equal(ps[at+2],'Last');
  console.log('PASS: reference geometry/logo/headers/styles, separate contacts, 19-column score export, XML escaping, blank lines, no copied signature, no state mutation.');
  window.close();

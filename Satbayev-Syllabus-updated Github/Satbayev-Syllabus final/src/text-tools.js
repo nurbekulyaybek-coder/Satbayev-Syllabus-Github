@@ -38,6 +38,9 @@ function insertSectionParagraph(n,line,focusTarget='editor'){
 const COPY_ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>';
 const PASTE_ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="8" y="2" width="8" height="6" rx="2"/><path d="M8 12h8M8 16h6"/></svg>';
 function textToolButton(label,icon,id,action){const b=document.createElement('button');b.id=id;b.type='button';b.className='text-tool';b.title=T(label);b.setAttribute('aria-label',T(label));b.innerHTML=icon;b.onpointerdown=e=>e.preventDefault();b.onclick=action;return b}
+async function copyFieldText(area){try{if(!navigator.clipboard?.writeText)throw Error('clipboard');await navigator.clipboard.writeText(area.value);toast(T('textCopied'))}catch(e){const start=area.selectionStart,end=area.selectionEnd;area.focus();area.select();let copied=false;try{copied=document.execCommand('copy')}catch(_){}if(copied){area.setSelectionRange(start,end);toast(T('textCopied'))}else toast(T('copyShortcut'))}}
+async function pasteFieldText(area){const start=area.selectionStart,end=area.selectionEnd;try{if(!navigator.clipboard?.readText)throw Error('clipboard');const text=(await navigator.clipboard.readText()).replace(/\r\n?/g,'\n');area.focus();area.setRangeText(text,start,end,'end');area.dispatchEvent(new Event('input',{bubbles:true}))}catch(e){area.focus();area.setSelectionRange(start,end);toast(T('pasteShortcut'))}}
+function installSplitTextTools(area){if(!area||area.dataset.textTools)return;area.dataset.textTools='true';const box=document.createElement('div');box.className='section-textbox';area.before(box);box.append(area);const toolbar=document.createElement('div');toolbar.className='text-clipboard';toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label',T('content'));toolbar.append(textToolButton('pasteText',PASTE_ICON,area.id+'Paste',()=>pasteFieldText(area)),textToolButton('copyText',COPY_ICON,area.id+'Copy',()=>copyFieldText(area)));box.append(toolbar);const add=textToolButton('addParagraph','+',area.id+'AddParagraph',()=>{const pos=area.selectionEnd;area.setRangeText('\n',pos,pos,'end');area.dispatchEvent(new Event('input',{bubbles:true}));area.focus()});add.classList.add('add-paragraph-editor');area.closest('.field')?.append(add)}
 async function copySectionText(area){
  const text=area.value;
  try{if(!navigator.clipboard?.writeText)throw Error('clipboard');await navigator.clipboard.writeText(text);toast(T('textCopied'))}
@@ -53,6 +56,7 @@ async function pasteSectionText(area,n){
  }catch(e){area.focus();area.setSelectionRange(start,end);toast(T('pasteShortcut'))}
 }
 function installSectionTextTools(){
+ if(S.active===3&&$('goalText')&&$('objectiveText')){installSplitTextTools($('goalText'));installSplitTextTools($('objectiveText'));return}
  const area=$('sectext');if(!area||$('sectionTextTools'))return;
  const n=S.active-1,editable=sectionTextEditable(n)&&!area.readOnly;
  const box=document.createElement('div');box.className='section-textbox';area.before(box);box.append(area);

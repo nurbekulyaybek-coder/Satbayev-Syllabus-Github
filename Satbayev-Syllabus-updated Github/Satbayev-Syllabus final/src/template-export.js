@@ -14,7 +14,8 @@ function makeDocx(state){
  const templates=Object.fromEntries(Object.entries(EXPORT_TEMPLATE.paragraphs).map(([k,v])=>[k,load(v)]));
  const tables=EXPORT_TEMPLATE.tables.map(load);
  const L=state.documentLabels||LANG_DATA.labels[state.lang||'kk'],m=state.meta,lang=state.lang||'kk';
- const words={kk:{department:'кафедрасы',weeks:'Апта',competence:'Құзыреттілік',exam:'Қорытынды емтихан',study:'Оқу түрі - күндізгі',total:'Барлығы',director:'институтының директоры'},ru:{department:'Кафедра',weeks:'Недели',competence:'Компетенции',exam:'Итоговый экзамен',study:'Форма обучения — очная',total:'Итого',director:'Директор института'},en:{department:'Department',weeks:'Weeks',competence:'Competencies',exam:'Final examination',study:'Mode of study — full-time',total:'Total',director:'Institute director'}}[lang];
+ const words={kk:{department:'кафедрасы',weeks:'Апта',competence:'Құзыреттілік',exam:'Қорытынды емтихан',study:'Оқу түрі - күндізгі',studyLabel:'Оқу түрі',total:'Барлығы',director:'институтының директоры'},ru:{department:'Кафедра',weeks:'Недели',competence:'Компетенции',exam:'Итоговый экзамен',study:'Форма обучения — очная',studyLabel:'Форма обучения',total:'Итого',director:'Директор института'},en:{department:'Department',weeks:'Weeks',competence:'Competencies',exam:'Final examination',study:'Mode of study — full-time',studyLabel:'Mode of study',total:'Total',director:'Institute director'}}[lang];
+ const protocolNumber=String(m.protocolNumber||'___').replace(/^№\s*/i,''),protocol='№ '+protocolNumber+', '+(m.protocolDate?m.protocolDate.split('-').reverse().join('.'):'«___» __________ '+m.date+L.yearSuffix);
  function setText(p,text,{bold,size,keep=false,align,breakBefore=false}={}){
   let pr=first(p,'pPr');if(!pr){pr=make('pPr');p.prepend(pr)}
   const oldRun=children(p,'r').find(r=>r.getElementsByTagNameNS(W,'t').length),oldRp=oldRun&&first(oldRun,'rPr');
@@ -34,6 +35,7 @@ function makeDocx(state){
  const values={institute:m.institute,department:lang==='kk'?m.department+(m.department.endsWith(words.department)?'':' '+words.department):words.department+' '+m.department,approve:L.approve,directorTitle:m.directorTitle||L.director,director:'____________ '+m.director,approvalDate:m.approvalDate?m.approvalDate.split('-').reverse().join('.'):'«___» ___________ '+m.date+L.yearSuffix,syllabus:L.syllabus,course:m.code+' '+m.course,program:m.program,credits:L.cycle+' '+m.cycle+', '+m.credits+' ('+m.distribution+') '+L.credits,term:lang==='kk'?m.studyYear+' '+L.yearOfStudy+', '+m.semester+' '+L.semester:L.yearOfStudy+' '+m.studyYear+', '+L.semester+' '+m.semester,year:lang==='kk'?m.year+' '+L.academicYear:L.academicYear+' '+m.year,city:m.city+' '+m.date};
  for(const t of Array.from(body.getElementsByTagNameNS(W,'t'))){const match=t.textContent.match(/^\{\{(\w+)\}\}$/);if(match)t.textContent=values[match[1]]||''}
  // Cover labels must not inherit the source's caps on the course title.
+ const approvalPara=children(body,'p').find(p=>Array.from(p.getElementsByTagNameNS(W,'t')).some(t=>t.textContent==='{{approvalDate}}'));if(approvalPara)body.insertBefore(paragraph(L.approvedMeeting+' '+protocol,{align:'center'}),approvalPara.nextSibling);
  for(const p of children(body,'p'))for(const caps of Array.from(p.getElementsByTagNameNS(W,'caps')))caps.remove();
  function cellText(cell,value,opt={}){
   let p=first(cell,'p');if(!p){p=make('p');cell.append(p)}
@@ -54,8 +56,8 @@ function makeDocx(state){
   rows.forEach((values,i)=>{
    const row=(i===0&&header?headerProto:dataProto).cloneNode(true);if(i>0||!header)cleanRow(row);
    // Source prerequisite/contact/signature tables have no header row.
-   const displayed=values.map((v,j)=>i===0&&special&&(index===5?j===0:j<3)?'':index===6&&i>0&&j>=2&&String(v)==='0'?'':v);
-   rowText(row,displayed,{bold:i===0&&header,size:[0,1,9].includes(index)?14:index===8?11:12,align:index===6?'center':i===0&&header?'center':'left'});
+   const displayed=values.map((v,j)=>i===0&&special&&(index===5?j===0:j<3)?'':index===6&&j===2?String(v)==='0'?'':String(v).trim().split(/[;\s]+/).filter(Boolean).length===2?String(v).trim().split(/[;\s]+/).filter(Boolean).join('/'):v:index===6&&i>0&&j>=3&&String(v)==='0'?'':v);
+   rowText(row,displayed,{bold:(i===0&&header)||(index===3&&/аралық аттеста|аралық бақылау|interim assessment|промежуточн.*аттестаци|қорытынды емтихан|итоговый экзамен|final examination/i.test(values.join(' '))),size:[0,1,9].includes(index)?14:index===8?11:12,align:index===6?'center':i===0&&header?'center':'left'});
    if(index===3&&i===0&&header)cellText(children(row,'tc')[5],displayed[5],{bold:true,size:11,align:'center'});
    if(i===0&&header)repeatHeader(row);
    for(const c of children(row,'tc')){const pr=first(c,'tcPr');if(pr)prop(pr,'vAlign',{val:'center'});const p=first(c,'p');if(keep&&p)prop(first(p,'pPr'),'keepNext');}
@@ -70,14 +72,14 @@ function makeDocx(state){
  state.sections.forEach((sec,n)=>{
   add(paragraph(sec.title,{bold:true,keep:true,breakBefore:n===0},46));
   if(n===0){
-   const lecturerLine=paragraph('1.1 '+L.lecturer+': ',{bold:true,keep:true},48);lecturerLine.append(children(paragraph(m.lecturer),'r')[0]);add(lecturerLine);
    const officeLabel=lang==='kk'?'кеңсе: кабинет ':L.office+': ',hoursLabel=lang==='kk'?'Офис-сағаты: ':L.hours+': ';
-   add(buildTable(0,[[officeLabel+(m.office||''),hoursLabel+(m.officeHours||'')],['','e-mail: '+(m.email||'')]],{header:false}));
-   add(paragraph(''));
-   add(paragraph('1.2 '+L.practice+':',{bold:true,keep:true},53));add(paragraph(m.practice,{keep:true},54));
-   add(buildTable(1,[[officeLabel+(m.practiceOffice??m.office??''),hoursLabel+(m.practiceHours??m.officeHours??'')],['','e-mail: '+(m.practiceEmail??(m.practice===m.lecturer?m.email:''))]],{header:false}));
-   add(paragraph(''));add(paragraph(m.studyMode||words.study,{bold:true},58));
-  }else if(!tableOnly.has(n)&&n!==10){for(const line of textOf(sec).split('\n'))add(paragraph(line))}
+   for(const practice of [false,true]){
+    const who=practice?'practice':'lecturer',office=practice?'practiceOffice':'office',hours=practice?'practiceHours':'officeHours',email=practice?'practiceEmail':'email';
+    const names=String(m[who]||'').split(/\r?\n+/).map(x=>x.trim()).filter(Boolean),offices=String(m[office]??(practice?m.office:'')).split(/\r?\n+/),times=String(m[hours]??(practice?m.officeHours:'')).split(/\r?\n+/),emails=String(m[email]??(practice?(m.practice===m.lecturer?m.email:''):m.email)).split(/\r?\n+/);
+    names.forEach((name,i)=>{const suffix=names.length>1?' '+(i+1):'';add(paragraph((practice?'1.2 ':'1.1 ')+L[who]+suffix+': '+name,{bold:true,keep:true}));add(buildTable(practice?1:0,[[officeLabel+(offices[i]||offices[0]||'').trim(),hoursLabel+(times[i]||times[0]||'').trim()],['','e-mail: '+(emails[i]||emails[0]||'').trim()]],{header:false}));add(paragraph(''))});
+   }
+   add(paragraph(words.studyLabel+' — '+(m.studyMode||({kk:'Күндізгі',ru:'Очная',en:'Full-time'}[lang])),{bold:true},58));
+  }else if(!tableOnly.has(n)&&n!==10){const lines=textOf(sec).split(/\r?\n/),headings=/^(Білуі керек|Істей алуы керек|Дағдыларды меңгеру|Знать|Уметь|Владеть|Knowledge|Skills|Ability to)\s*:/i,firsts=lines.map((line,i)=>headings.test(line.trim())?lines.findIndex((x,j)=>j>i&&x.trim()):-1).filter(i=>i>=0);lines.forEach((line,i)=>add(paragraph(line,{bold:n===4&&firsts.includes(i)})))}
   if(n===10){const lines=textOf(sec).split('\n');for(const line of lines.filter(x=>!/(?:Баға\s*=|Оценка\s*=|Grade\s*=|Жалпы балл|Общий балл|Total score|^Примечание|^Ескерту|^Түсініктеме|^Практикада:)/i.test(x)))add(paragraph(line))}
   if(state.tables[n]){
    const map={1:2,5:3,6:4,7:5,8:6,9:7,10:8};let rows=state.tables[n].map(r=>r.slice()),scoreGroups=[];
@@ -99,7 +101,7 @@ function makeDocx(state){
   }
   if(n===10){const formula=textOf(sec).split('\n').filter(x=>/(?:Баға\s*=|Оценка\s*=|Grade\s*=|Жалпы балл|Общий балл|Total score)/i.test(x));for(const line of formula)add(paragraph(line,{bold:/=/.test(line)}))}
  });
- add(paragraph((m.department?'«'+m.department+'» ':'')+L.approvedMeeting+' '+m.protocol));add(paragraph(''));
+ add(paragraph((m.department?'«'+m.department+'» ':'')+L.approvedMeeting+' '+protocol));add(paragraph(''));
  add(buildTable(9,[[L.head,m.head],['',''],[L.author,m.author]],{header:false}));add(paragraph(''));
  add(paragraph(L.agreed,{bold:true,keep:true},151));
  for(const line of String(m.agreement||'________________________').split('\n'))add(paragraph(line,{},154));

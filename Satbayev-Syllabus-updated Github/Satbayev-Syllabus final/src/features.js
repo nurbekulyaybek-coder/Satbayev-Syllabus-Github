@@ -16,7 +16,6 @@ function upgradeState(){
  const examLabels={kk:'Қорытынды емтихан',ru:'Итоговый экзамен',en:'Final examination'},finalRow=schedule?.find(r=>/емтихан|экзамен|examination/i.test(r[1]||''));if(finalRow){finalRow[1]=examLabels[lang]||examLabels.kk;if(S.meta.examFormat)finalRow[1]+=' ('+S.meta.examFormat.toLocaleLowerCase()+')';for(let j=2;j<finalRow.length-1;j++)finalRow[j]=''}
  const scoreHeader=LANG_DATA.packs?.[lang]?.tables?.[8]?.[0];if(scoreHeader&&S.tables?.[8]?.[0])S.tables[8][0]=structuredClone(scoreHeader);
 }
-upgradeState();
 function uniqueOptions(items){const seen=new Set();return items.filter(x=>x.value&&!seen.has(x.value)&&seen.add(x.value))}
 function selectedDepartment(){const inst=(S.relations||[]).find(x=>x.name===S.meta.institute);return inst?.departments?.find(x=>x.name===S.meta.department)||null}
 function choices(k){

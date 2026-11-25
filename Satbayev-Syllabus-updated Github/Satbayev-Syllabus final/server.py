@@ -88,10 +88,12 @@ def overlay(doc,cfg):
  for n in LOCKED_SECTIONS:state['sections'][n]=copy.deepcopy(cfg['sections'][n])
  for n in LOCKED_TABLES:state['tables'][n]=copy.deepcopy(cfg['tables'][n])
  for i,s in enumerate(state['sections']):s['title']=SEED['sections'][i]['title']
- inst,dep=selected(state)
- if not inst:state['meta'].update(institute='',department='',program='',course='',code='')
- elif not dep:state['meta'].update(department='',program='',course='',code='')
- elif state['meta']['program'] and state['meta']['program'] not in dep['programs']:state['meta'].update(program='',course='',code='')
+ inst,dep=selected(state);m=state['meta'];titles={x['title'] for x in state.get('programDirectory',[]) if isinstance(x,dict) and isinstance(x.get('title'),str)}
+ mapped={p for i in state.get('relations',[]) for d in i.get('departments',[]) for p in d.get('programs',[])}
+ if not inst:m.update(institute='',department='')
+ elif not dep:m.update(department='')
+ if m['program'] not in titles:m.update(program='',course='',code='')
+ elif m['program'] in mapped and (not dep or m['program'] not in dep['programs']):m.update(program='',course='',code='')
  return normalize(state)
 
 def validate(state,current,role,con=None):
@@ -135,8 +137,10 @@ def validate(state,current,role,con=None):
  inst,dep=selected(state)
  if m['institute'] and not inst:raise ValueError('Институт не найден')
  if m['department'] and not dep:raise ValueError('Кафедра не относится к выбранному институту')
- if m['program'] and (not dep or m['program'] not in dep['programs']):raise ValueError('Программа не относится к выбранной кафедре')
- if m['course'] and not any(c['title']==m['course'] and c['code']==m['code'] and m['program'] in c.get('programs',[]) for c in state['courses']):raise ValueError('Дисциплина не связана с выбранной программой')
+ mapped={p for i in state['relations'] for d in i['departments'] for p in d['programs']}
+ if m['program'] and m['program'] not in titles:raise ValueError('Программа отсутствует в общем каталоге')
+ if m['program'] in mapped and (not dep or m['program'] not in dep['programs']):raise ValueError('Программа не относится к выбранной кафедре')
+ if m['course'] and not any((m['course']==c['title'] or m['course'] in (c.get('titles') or {}).values()) and c['code']==m['code'] and (not c.get('programs') or m['program'] in c.get('programs',[])) for c in state['courses']):raise ValueError('Дисциплина не связана с выбранной программой')
  if role=='admin':
   if inst:inst['director']=m['director']
   if dep:dep['head']=m['head']
@@ -148,6 +152,7 @@ def validate(state,current,role,con=None):
    except (ValueError,TypeError):raise ValueError('Дата должна существовать в календаре')
    if not 2020<=d.year<=2100:raise ValueError('Годы дат: 2020–2100')
  if not m['date'].isdigit() or not 2020<=int(m['date'])<=2100:raise ValueError('Год: 2020–2100')
+ if m['distribution'] and not re.fullmatch(r'\d(?:/\d?){0,3}',m['distribution']):raise ValueError('Распределение часов: четыре числа через слэш, например 2/0/1/2')
  if not re.fullmatch(r'\d{4}–\d{4}',m['year']) or not 2020<=int(m['year'][:4])<=2099 or int(m['year'][5:])!=int(m['year'][:4])+1:raise ValueError('Некорректный учебный год')
  if m['credits'] and (not re.fullmatch(r'\d{1,2}',m['credits']) or not 1<=int(m['credits'])<=60):raise ValueError('Кредиты: 1–60')
  if not isinstance(state['tables'],dict) or set(state['tables'])!=set(SEED['tables']):raise ValueError('Некорректный набор таблиц')

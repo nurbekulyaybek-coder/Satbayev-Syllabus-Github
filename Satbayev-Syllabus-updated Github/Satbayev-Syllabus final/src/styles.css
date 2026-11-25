@@ -88,3 +88,6 @@ header{height:auto;min-height:76px;flex-wrap:wrap;padding-top:10px;padding-botto
 .library-catalog-link{display:inline-flex;align-items:center;gap:8px;width:fit-content;margin:8px 0 14px;padding:10px 14px;border:1px solid #9bb4d6;border-radius:7px;color:#174b88;text-decoration:none;font-size:13px;font-weight:600;background:#f6f9fe}.library-catalog-link:hover{background:#eaf1fb}
 
 .field textarea[data-meta='lecturer'],.field textarea[data-meta='practice'],.field textarea[data-meta='office'],.field textarea[data-meta='officeHours'],.field textarea[data-meta='email'],.field textarea[data-meta='practiceOffice'],.field textarea[data-meta='practiceHours'],.field textarea[data-meta='practiceEmail']{min-height:68px}
+.preview-hover-highlight{background:#fff0a3!important;outline:2px solid #ddb100!important;outline-offset:1px;transition:background-color .12s ease,outline-color .12s ease}
+.tableedit .assessment-label-row textarea{font-weight:700;text-align:center;background:#f6f8fb}
+.tableedit .schedule-week-number{font-weight:700;text-align:center}

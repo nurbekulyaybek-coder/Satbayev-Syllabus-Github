@@ -26,11 +26,11 @@ saveProjectNow=async function(){
 loadDocument=async function(){
  const me=await api('/api/me');currentUser=me.user;
  const r=await api('/api/workspace');workspace=r.workspace;workspaceRevision=r.revision;
- for(const d of workspace.documents)attachCurriculum(d.state);S=cloneState(currentDoc().state);dirty=false;undoStacks.clear();redoStacks.clear();historySeed();
- $('loginScreen').hidden=true;document.body.classList.add('authenticated');renderAll();markStatus(T('savedServer'));
+ for(const d of workspace.documents)attachCurriculum(d.state);S=cloneState(currentDoc().state);const beforeUpgrade=JSON.stringify(S);upgradeState();const migrated=JSON.stringify(S)!==beforeUpgrade;if(migrated)currentDoc().state=cloneState(S);dirty=migrated;undoStacks.clear();redoStacks.clear();historySeed();
+ $('loginScreen').hidden=true;document.body.classList.add('authenticated');renderAll();if(migrated)await saveProjectNow();else markStatus(T('savedServer'));
 };
 const workspaceLogout=logout;logout=async function(){await workspaceLogout();if(!currentUser){workspace=null;undoStacks.clear();redoStacks.clear();$('workspaceBar')?.remove()}};
-function selectDocument(id){captureDocument();workspace.activeId=id;S=cloneState(currentDoc().state);historySeed();renderAll();persist()}
+function selectDocument(id){captureDocument();workspace.activeId=id;S=cloneState(currentDoc().state);const beforeUpgrade=JSON.stringify(S);upgradeState();const migrated=JSON.stringify(S)!==beforeUpgrade;if(migrated)captureDocument();historySeed();renderAll();if(migrated)saveProjectNow();else persist()}
 function blankDocument(source,full=false){const st=cloneState(source);st.sections.forEach(s=>s.text='');for(const [k,rows]of Object.entries(st.tables))st.tables[k]=[rows[0].slice(),rows[0].map((_,j)=>k==='8'&&j>=2?'0':'')];if(full){for(const k of Object.keys(st.meta))st.meta[k]='';st.meta.university=source.meta.university;st.meta.city=source.meta.city;st.meta.date=String(new Date().getFullYear());st.meta.year=st.meta.date+'–'+(Number(st.meta.date)+1);st.active=0}return st}
 function newDocument(){if(workspace.documents.length>=20)return toast(W("Можно создать до 20 силлабусов"));const name=prompt(W("Название нового силлабуса"),W("Новый силлабус"));if(!name?.trim())return;captureDocument();const id=crypto.randomUUID();workspace.documents.push({id,name:name.trim().slice(0,120),state:blankDocument(S,true),versions:[]});selectDocument(id)}
 function renameDocument(){const name=prompt(W("Название вкладки"),currentDoc().name);if(name?.trim()){currentDoc().name=name.trim().slice(0,120);persist()}}

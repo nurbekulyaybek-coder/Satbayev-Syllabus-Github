@@ -67,3 +67,4 @@ $('resetPasswordForm').onsubmit=async e=>{e.preventDefault();try{await api('/api
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
 function openYear(k){if(!canEdit('meta:'+k))return;pickerKey=k;$('yearTitle').textContent=T(k);$('yearValue').innerHTML=choices(k).map(x=>`<option ${x.value===S.meta[k]?'selected':''}>${esc(x.value)}</option>`).join('');$('yearDialog').showModal()}
 $('yearApply').onclick=()=>{setMeta(pickerKey,$('yearValue').value);$('yearDialog').close();renderEditor()};
+const hideApproverTitleField=renderEditor;renderEditor=function(){hideApproverTitleField();if(S.active===0)$('f-directorTitle')?.closest('.field')?.remove()};

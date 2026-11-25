@@ -231,7 +231,7 @@ function upgradeState(){
  for(const c of INITIAL.courses||[])if(!S.courses.some(x=>x.code===c.code&&x.title===c.title&&x.sourceYear===c.sourceYear))S.courses.push(structuredClone(c));
  if((S.directoryVersion||1)<2){for(const c of INITIAL.catalog)if(!S.catalog.some(x=>x.name===c.name))S.catalog.push(structuredClone(c));S.directoryVersion=2}
  const schedule=S.tables?.[5],lang=S.lang||'kk',assessmentLabels={kk:['Бірінші аралық аттестация','Екінші аралық аттестация'],ru:['Первая промежуточная аттестация','Вторая промежуточная аттестация'],en:['First interim assessment','Second interim assessment']}[lang]||['Бірінші аралық аттестация','Екінші аралық аттестация'];
- if(schedule?.length){for(let i=schedule.length-1;i>0;i--)if(/^8\s*,\s*15$/.test(String(schedule[i][0]||'').trim()))schedule.splice(i,1);for(const [week,label]of [['8',assessmentLabels[0]],['15',assessmentLabels[1]]]){if(schedule.some(r=>String(r[1]||'').trim()===label))continue;const at=schedule.findIndex((r,i)=>i>0&&String(r[0]||'').trim()===week);if(at>=0)schedule.splice(at+1,0,['',label,...Array(Math.max(0,schedule[0].length-2)).fill('')])}}
+ if(schedule?.length){const combined=schedule.find(r=>/^8\s*,\s*15$/.test(String(r[0]||'').trim()));if(combined){combined[0]='';combined[1]=assessmentLabels[0];for(let j=2;j<combined.length;j++)combined[j]=''}for(const [week,label]of [['8',assessmentLabels[0]],['15',assessmentLabels[1]]]){if(schedule.some(r=>String(r[1]||'').trim()===label))continue;const at=schedule.findIndex((r,i)=>i>0&&String(r[0]||'').trim()===week);if(at>=0)schedule.splice(at+1,0,['',label,...Array(Math.max(0,schedule[0].length-2)).fill('')])}}
  const examFormats={kk:['Ауызша','Жазбаша'],ru:['Устный','Письменный'],en:['Oral','Written']}[lang]||['Ауызша','Жазбаша'];if(!examFormats.includes(S.meta.examFormat))S.meta.examFormat='';
  const examLabels={kk:'Қорытынды емтихан',ru:'Итоговый экзамен',en:'Final examination'},finalRow=schedule?.find(r=>/емтихан|экзамен|examination/i.test(r[1]||''));if(finalRow){finalRow[1]=examLabels[lang]||examLabels.kk;if(S.meta.examFormat)finalRow[1]+=' ('+S.meta.examFormat.toLocaleLowerCase()+')';for(let j=2;j<finalRow.length-1;j++)finalRow[j]=''}
  const scoreHeader=LANG_DATA.packs?.[lang]?.tables?.[8]?.[0];if(scoreHeader&&S.tables?.[8]?.[0])S.tables[8][0]=structuredClone(scoreHeader);
@@ -354,6 +354,7 @@ $('resetPasswordForm').onsubmit=async e=>{e.preventDefault();try{await api('/api
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
 function openYear(k){if(!canEdit('meta:'+k))return;pickerKey=k;$('yearTitle').textContent=T(k);$('yearValue').innerHTML=choices(k).map(x=>`<option ${x.value===S.meta[k]?'selected':''}>${esc(x.value)}</option>`).join('');$('yearDialog').showModal()}
 $('yearApply').onclick=()=>{setMeta(pickerKey,$('yearValue').value);$('yearDialog').close();renderEditor()};
+const hideApproverTitleField=renderEditor;renderEditor=function(){hideApproverTitleField();if(S.active===0)$('f-directorTitle')?.closest('.field')?.remove()};
 
 // Full syllabus language switching, real server AI chat and contextual assistance.
 const LANG_DATA=JSON.parse(document.getElementById('language-data').textContent),langLookup=new Map();
@@ -540,11 +541,11 @@ saveProjectNow=async function(){
 loadDocument=async function(){
  const me=await api('/api/me');currentUser=me.user;
  const r=await api('/api/workspace');workspace=r.workspace;workspaceRevision=r.revision;
- for(const d of workspace.documents)attachCurriculum(d.state);S=cloneState(currentDoc().state);dirty=false;undoStacks.clear();redoStacks.clear();historySeed();
- $('loginScreen').hidden=true;document.body.classList.add('authenticated');renderAll();markStatus(T('savedServer'));
+ for(const d of workspace.documents)attachCurriculum(d.state);S=cloneState(currentDoc().state);const beforeUpgrade=JSON.stringify(S);upgradeState();const migrated=JSON.stringify(S)!==beforeUpgrade;if(migrated)currentDoc().state=cloneState(S);dirty=migrated;undoStacks.clear();redoStacks.clear();historySeed();
+ $('loginScreen').hidden=true;document.body.classList.add('authenticated');renderAll();if(migrated)await saveProjectNow();else markStatus(T('savedServer'));
 };
 const workspaceLogout=logout;logout=async function(){await workspaceLogout();if(!currentUser){workspace=null;undoStacks.clear();redoStacks.clear();$('workspaceBar')?.remove()}};
-function selectDocument(id){captureDocument();workspace.activeId=id;S=cloneState(currentDoc().state);historySeed();renderAll();persist()}
+function selectDocument(id){captureDocument();workspace.activeId=id;S=cloneState(currentDoc().state);const beforeUpgrade=JSON.stringify(S);upgradeState();const migrated=JSON.stringify(S)!==beforeUpgrade;if(migrated)captureDocument();historySeed();renderAll();if(migrated)saveProjectNow();else persist()}
 function blankDocument(source,full=false){const st=cloneState(source);st.sections.forEach(s=>s.text='');for(const [k,rows]of Object.entries(st.tables))st.tables[k]=[rows[0].slice(),rows[0].map((_,j)=>k==='8'&&j>=2?'0':'')];if(full){for(const k of Object.keys(st.meta))st.meta[k]='';st.meta.university=source.meta.university;st.meta.city=source.meta.city;st.meta.date=String(new Date().getFullYear());st.meta.year=st.meta.date+'–'+(Number(st.meta.date)+1);st.active=0}return st}
 function newDocument(){if(workspace.documents.length>=20)return toast(W("Можно создать до 20 силлабусов"));const name=prompt(W("Название нового силлабуса"),W("Новый силлабус"));if(!name?.trim())return;captureDocument();const id=crypto.randomUUID();workspace.documents.push({id,name:name.trim().slice(0,120),state:blankDocument(S,true),versions:[]});selectDocument(id)}
 function renameDocument(){const name=prompt(W("Название вкладки"),currentDoc().name);if(name?.trim()){currentDoc().name=name.trim().slice(0,120);persist()}}
